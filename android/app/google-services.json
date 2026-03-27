@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1050276192544",
+    "project_id": "menuservex",
+    "storage_bucket": "menuservex.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050276192544:android:79b4443e215d22f228f745",
+        "android_client_info": {
+          "package_name": "com.example.menu_servex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9S9UXSFCOPGvtK5jbkOjGRq2gl8E_zLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
