@@ -17,23 +17,28 @@ class Customerdetails extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage(AppImages.customerDetailsBG),
-          ),
+       color: Color(0xffF5F3E4),
         ),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(30),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _customerDetails(),
-                  SizedBox(height: 30),
-                  _continueButton(context),
-                ],
-              ),
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 20,),
+                Hero(
+                  tag: 1,
+                  child: Image(image: AssetImage(AppImages.logo,),
+                  height: 180,
+                  width: 180,
+                  fit: BoxFit.contain,
+                  ),
+                ),
+                SizedBox(height: 60),
+                _customerDetails(),
+                SizedBox(height: 60),
+                _continueButton(context),
+              ],
             ),
           ),
         ),
@@ -45,7 +50,10 @@ class Customerdetails extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Color(0xffF5F3E4),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage(AppImages.customerDetailsBG),
+          ),
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
@@ -69,8 +77,10 @@ class Customerdetails extends StatelessWidget {
       controller: _nameController,
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
+        fillColor: Color(0xffF5F3E4),
+        filled: true,
         contentPadding: EdgeInsets.all(20),
-        hint: Text("Name"),
+        label: Text("Name"),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
       ),
     );
@@ -81,8 +91,10 @@ class Customerdetails extends StatelessWidget {
       controller: _phNumberController,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
+        fillColor: Color(0xffF5F3E4),
+        filled: true,
         contentPadding: EdgeInsets.all(20),
-        hint: Text("Phone Number"),
+        label: Text("Phone Number"),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
       ),
     );
@@ -93,8 +105,10 @@ class Customerdetails extends StatelessWidget {
       controller: _tableNumberController,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
+        fillColor: Color(0xffF5F3E4),
+        filled: true,
         contentPadding: EdgeInsets.all(20),
-        hint: Text("Table Number"),
+        label: Text("Table Number"),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
       ),
     );
@@ -103,20 +117,20 @@ class Customerdetails extends StatelessWidget {
   Widget _continueButton(context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage(),));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(),));
       },
       child: Container(
         // height: 50,
-        // width: 80,
+        width: double.infinity,
         decoration: BoxDecoration(
           color: AppColors.primary,
           borderRadius: BorderRadius.circular(30)
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-          child: Text("Continue",
+          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
+          child: Text("OPEN MENU",
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 26),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xffF5F3E4), fontSize: 22),
           ),
         ),
       ),

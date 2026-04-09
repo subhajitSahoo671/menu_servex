@@ -3,8 +3,11 @@ class AppImages {
     static const String format = ".png";
 
     static const String splashLogo = 
-    "${basePath}splashLogo3$format";
+    "${basePath}customerDetailsBG1$format";
+
+    static const String logo = 
+    "${basePath}logo_menu$format";
 
     static const String customerDetailsBG = 
-    "${basePath}customerDetailsBG$format";
+    "${basePath}customerDetailsBG1$format";
 }

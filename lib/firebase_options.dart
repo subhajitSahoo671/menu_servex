@@ -41,48 +41,48 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDtB7O31ZetbrUMXPjM94yF3Q-vHFfNtyY',
-    appId: '1:1050276192544:web:11a4e9c881f204e928f745',
-    messagingSenderId: '1050276192544',
-    projectId: 'menuservex',
-    authDomain: 'menuservex.firebaseapp.com',
-    storageBucket: 'menuservex.firebasestorage.app',
-    measurementId: 'G-8MFXFJKKML',
+    apiKey: 'AIzaSyAbUhpGnFnbUpGs4hOpUShAWIh8Y5YVBcc',
+    appId: '1:488203891195:web:19df7764319e2cea5f5b5e',
+    messagingSenderId: '488203891195',
+    projectId: 'menuservex-bb2db',
+    authDomain: 'menuservex-bb2db.firebaseapp.com',
+    storageBucket: 'menuservex-bb2db.firebasestorage.app',
+    measurementId: 'G-226YDEH4H8',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB9S9UXSFCOPGvtK5jbkOjGRq2gl8E_zLo',
-    appId: '1:1050276192544:android:79b4443e215d22f228f745',
-    messagingSenderId: '1050276192544',
-    projectId: 'menuservex',
-    storageBucket: 'menuservex.firebasestorage.app',
+    apiKey: 'AIzaSyA9lkFwvKDBOch7oNDBUd_jRY8JK4D3xkQ',
+    appId: '1:488203891195:android:34d7419e8bc6eba05f5b5e',
+    messagingSenderId: '488203891195',
+    projectId: 'menuservex-bb2db',
+    storageBucket: 'menuservex-bb2db.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCR5TCDrT3jVbH3TaPP4MHZh9wgXgjzFfU',
-    appId: '1:1050276192544:ios:44de6bf4a76465db28f745',
-    messagingSenderId: '1050276192544',
-    projectId: 'menuservex',
-    storageBucket: 'menuservex.firebasestorage.app',
+    apiKey: 'AIzaSyAVTBzbrKmHbfe6EifjQhUcn2re325qONY',
+    appId: '1:488203891195:ios:6499e1ca222ce82d5f5b5e',
+    messagingSenderId: '488203891195',
+    projectId: 'menuservex-bb2db',
+    storageBucket: 'menuservex-bb2db.firebasestorage.app',
     iosBundleId: 'com.example.menuServex',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCR5TCDrT3jVbH3TaPP4MHZh9wgXgjzFfU',
-    appId: '1:1050276192544:ios:44de6bf4a76465db28f745',
-    messagingSenderId: '1050276192544',
-    projectId: 'menuservex',
-    storageBucket: 'menuservex.firebasestorage.app',
+    apiKey: 'AIzaSyAVTBzbrKmHbfe6EifjQhUcn2re325qONY',
+    appId: '1:488203891195:ios:6499e1ca222ce82d5f5b5e',
+    messagingSenderId: '488203891195',
+    projectId: 'menuservex-bb2db',
+    storageBucket: 'menuservex-bb2db.firebasestorage.app',
     iosBundleId: 'com.example.menuServex',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDtB7O31ZetbrUMXPjM94yF3Q-vHFfNtyY',
-    appId: '1:1050276192544:web:c3d5ac5917df140528f745',
-    messagingSenderId: '1050276192544',
-    projectId: 'menuservex',
-    authDomain: 'menuservex.firebaseapp.com',
-    storageBucket: 'menuservex.firebasestorage.app',
-    measurementId: 'G-EHP90QPG80',
+    apiKey: 'AIzaSyAbUhpGnFnbUpGs4hOpUShAWIh8Y5YVBcc',
+    appId: '1:488203891195:web:429ae5cae10dcfa55f5b5e',
+    messagingSenderId: '488203891195',
+    projectId: 'menuservex-bb2db',
+    authDomain: 'menuservex-bb2db.firebaseapp.com',
+    storageBucket: 'menuservex-bb2db.firebasestorage.app',
+    measurementId: 'G-5S8J2WKSVP',
   );
 }
