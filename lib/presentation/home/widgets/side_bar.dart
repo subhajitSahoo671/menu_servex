@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 // import 'package:menu_servex/core/configs/assets/app_images.dart';
 import 'package:menu_servex/core/configs/theme/app_colors.dart';
 import 'package:menu_servex/domain/entity/menu_categories/categories.dart';
-import 'package:menu_servex/presentation/home/widgets/menu_items.dart';
 
 class SideBar extends StatelessWidget {
-  const SideBar({super.key, required this.categories});
+  const SideBar({super.key, required this.categories, required this.onCatagoryTap});
 
   final List<CategoriesEntity> categories;
+  final Function(int) onCatagoryTap;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,8 @@ class SideBar extends StatelessWidget {
                   final pic = categories[index].banner ;
                   return InkWell(
                     onTap: () {
-                     
+                      Navigator.pop(context);
+                      onCatagoryTap(index);
                     },
                     child: Container(
                       width: double.infinity,

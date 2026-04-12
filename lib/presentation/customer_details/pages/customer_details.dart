@@ -49,6 +49,9 @@ class Customerdetails extends StatelessWidget {
   Widget _customerDetails() {
     return Container(
       width: double.infinity,
+      constraints: BoxConstraints(
+        maxWidth: 500
+      ),
       decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
@@ -122,6 +125,9 @@ class Customerdetails extends StatelessWidget {
       child: Container(
         // height: 50,
         width: double.infinity,
+        constraints: BoxConstraints(
+          maxWidth: 500
+        ),
         decoration: BoxDecoration(
           color: AppColors.primary,
           borderRadius: BorderRadius.circular(30)
@@ -130,7 +136,7 @@ class Customerdetails extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
           child: Text("OPEN MENU",
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xffF5F3E4), fontSize: 22),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xffF5F3E4), fontSize: 20),
           ),
         ),
       ),

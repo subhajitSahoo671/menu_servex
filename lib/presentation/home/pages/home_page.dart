@@ -1,6 +1,4 @@
-import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:menu_servex/core/configs/assets/app_images.dart';
@@ -54,7 +52,13 @@ class _HomePageState extends State<HomePage> {
                   clipBehavior: Clip.antiAlias,
                   elevation: 20,
                   shadowColor: AppColors.textPrimary,
-                  child: SideBar(categories: state.categories),
+                  child: SideBar(categories: state.categories,
+                   onCatagoryTap: (int index){
+                    final menuState = _childKey.currentState;
+                    if (menuState != null) {
+                      menuState.scrollToIndex(index);
+                    }
+                  }),
                 ),
                 appBar: BasicAppBar(tabBar: _tabBar(state.categories)),
                 body:  MenuItems(categories: state.categories, key: _childKey),
@@ -95,84 +99,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
- 
-
-    // ScrollableListTabScroller.defaultComponents(
-    //     animationDuration: Duration(milliseconds: 300),
-    //     padding: EdgeInsets.all(  16),
-    //     shrinkWrap:  true,
-    //     tabBarProps:  TabBarProps(
-    //       isScrollable: true,
-    //       physics: BouncingScrollPhysics(),
-    //       dividerColor: Colors.transparent,
-    //         indicatorSize: TabBarIndicatorSize.tab,
-    //         labelColor: AppColors.bg,
-    //         labelStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-    //       indicator: BoxDecoration(
-    //         borderRadius: BorderRadius.circular(30),
-    //         color: AppColors.textPrimary,
-    //       ),
-    //       tabAlignment: TabAlignment.start,
-    //     ),
-    //     itemCount: _tabTitles.length,
-    //     tabBuilder: (context, index, active) => 
-    //     SizedBox(
-    //       width: 200,
-    //       child: Row(
-    //         children: [
-    //           IconButton(
-    //               onPressed: () {
-    //                 Scaffold.of(context).openDrawer();
-    //               },
-    //               icon: Icon(Icons.menu),
-    //             ),
-    //           Expanded(
-    //             child: Tab(
-    //                       // height: kToolbarHeight*2,        
-    //                       child: Container(
-    //             // height: kToolbarHeight * 1.5,
-    //             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    //             decoration: BoxDecoration(
-    //               borderRadius: BorderRadius.circular(30),
-    //               color: active ? AppColors.textPrimary : null,
-    //             ),
-    //             child: Center(
-    //               child: Text(
-    //                 _tabTitles[index]['name'],
-    //                 style: TextStyle(
-    //                   fontSize: 14,
-    //                   fontWeight: FontWeight.bold,
-    //                   color: active ? AppColors.bg : AppColors.textPrimary.withAlpha(200),
-    //                 ),
-    //               ),
-    //             ),
-    //                       ),
-    //                     ),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //     itemBuilder:(context, index) => Padding(
-    //       padding: const EdgeInsets.all(8.0),
-    //       child: Column(
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         children: [
-    //           Image.network(_tabTitles[index]['pic'], height: 200, fit: BoxFit.cover),
-    //           SizedBox(height: 16),
-    //           Padding(
-    //             padding: EdgeInsets.symmetric(horizontal: 16),
-    //             child: Text(
-    //               _tabTitles[index]['name'],
-    //               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-    //             ),
-    //           ),
-    //           SizedBox(height: 8),
-    //           ...(_tabTitles[index]['Category'] as List<String>? ?? []).map((item) => ListTile(
-    //                 title: Text(item),
-    //                 leading: Icon(Icons.fastfood, color: AppColors.textPrimary),
-    //               )),
-    //           SizedBox(height: 20), // Add spacing between sections
-    //         ],
-    //       ),
-    //     )
-    //   ),

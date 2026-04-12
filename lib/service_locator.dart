@@ -13,5 +13,6 @@ Future<void> initializeDependencies() async{
     sl.registerSingleton<MenuRepository>(MenuRepositoryImpl());
 
     sl.registerSingleton<GetMenuCategoriesUsecase>(GetMenuCategoriesUsecase());
-    
+
+   
 }

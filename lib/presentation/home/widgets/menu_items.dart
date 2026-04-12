@@ -32,7 +32,7 @@ class MenuItemsState extends State<MenuItems> {
   void animateToTabs() {
     late RenderBox box;
 
-    if (tabContext == null) return;
+    if (tabContext == null || !scrollController.hasClients) return;
 
     for (var i = 0; i < keys.length; i++) {
       final context = keys[i].currentContext;
@@ -48,9 +48,11 @@ class MenuItemsState extends State<MenuItems> {
 //           tabContext!,
 //         ).animateTo(i, duration: Duration(milliseconds: 100));}
     
-    if (scrollController.offset >= offset - 100) {
-      DefaultTabController.of(tabContext!)
-          .animateTo(i, duration: Duration(milliseconds: 100));
+    if (scrollController.offset >= offset - 150) {
+      final controller = DefaultTabController.of(tabContext!);
+     if (controller.index != i) {
+        controller.animateTo(i, duration: const Duration(milliseconds: 100));
+      }
       }
     }
   }
@@ -101,7 +103,7 @@ class MenuItemsState extends State<MenuItems> {
                               crossAxisSpacing: 15,
                               mainAxisSpacing: 15,
                             ),
-                        itemCount: 7,
+                        itemCount: 10,
                         itemBuilder: (BuildContext context, int index) {
                           return SizedBox(
                             child: Card(
