@@ -47,12 +47,14 @@ class BasicAppBar extends StatelessWidget implements PreferredSizeWidget {
             icon: Icon(Icons.search_rounded),
             color: Colors.white,
           ),
+          SizedBox(width: 5,),
           IconButton.filled(
             onPressed: () {},
             icon: FaIcon(FontAwesomeIcons.cartShopping),
             color: Colors.white,
             iconSize: 18,
           ),
+          SizedBox(width: 5,),
           IconButton.filled(
             onPressed: () {
               showDialog( context: context,

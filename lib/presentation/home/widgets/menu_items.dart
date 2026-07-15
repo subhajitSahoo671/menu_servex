@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:menu_servex/domain/entity/menu_categories/categories.dart';
+import 'package:menu_servex/presentation/home/widgets/item_card.dart';
 
 class MenuItems extends StatefulWidget {
   final List<CategoriesEntity> categories;
@@ -99,58 +100,14 @@ class MenuItemsState extends State<MenuItems> {
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
                               maxCrossAxisExtent: 200,
-                              mainAxisExtent: 250,
+                              mainAxisExtent: 230,
                               crossAxisSpacing: 15,
                               mainAxisSpacing: 15,
                             ),
                         itemCount: 10,
                         itemBuilder: (BuildContext context, int index) {
-                          return SizedBox(
-                            child: Card(
-                              color: Colors.white,
-                              // margin: EdgeInsets.all(10),
-                              elevation: 2,
-                              shadowColor: Colors.white,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                // mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image(
-                                      image: NetworkImage(catg.banner),
-                                      fit: BoxFit.cover,
-                                      width: 200,
-                                      height: 150,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0,
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          catg.category,
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Text(
-                                          catg.description,
-                                          style: TextStyle(
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
+                          return ItemCard(catg: catg);    
+                          },
                       ),
                     ),
                   ],
