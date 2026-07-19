@@ -18,25 +18,26 @@ class BasicAppBar extends StatelessWidget implements PreferredSizeWidget {
         animateColor: false,
         foregroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0,
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
-          child: Container(
-            margin: const EdgeInsets.only(bottom: 10.0),
-            child: Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                  icon: Icon(Icons.menu, size: 28),
-                ),
-                Expanded(child: tabBar!),
-              ],
-            ),
-          ),
-        ),
+        // bottom: PreferredSize(
+        //   preferredSize: Size.fromHeight(kToolbarHeight),
+        //   child: Container(
+        //     margin: const EdgeInsets.only(bottom: 10.0),
+        //     child: Row(
+        //       children: [
+        //          InkWell(
+        //            onTap: () {
+        //             Scaffold.of(context).openDrawer();
+        //           },
+        //           child: Icon(Icons.menu, size: 28),
+        //          ),
+        //          SizedBox(width: 8,),
+        //         Expanded(child: tabBar!),
+        //       ],
+        //     ),
+        //   ),
+        // ),
         leading: Hero(
           tag: 1,
           child: Image.asset(AppImages.logo, height: 80, width: 80),
@@ -72,5 +73,5 @@ class BasicAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight * 2 + 10);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

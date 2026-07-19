@@ -5,9 +5,9 @@ import 'package:menu_servex/service_locator.dart';
 
 class MenuRepositoryImpl extends MenuRepository {
   @override
-  Future<Either> getMenuItems() {
-    // TODO: implement getMenuItems
-    throw UnimplementedError();
+  Future<Either> getMenuItems() async{
+       return await sl<MenuFirebaseServise>().getMenuItems();
+
   }
   
   @override

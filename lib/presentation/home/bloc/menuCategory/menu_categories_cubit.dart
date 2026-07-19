@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_servex/domain/usecases/menu/get_menu_categories.dart';
-import 'package:menu_servex/presentation/home/bloc/menu_categories_state.dart';
+import 'package:menu_servex/presentation/home/bloc/menuCategory/menu_categories_state.dart';
 import 'package:menu_servex/service_locator.dart';
 
 class MenuCategoriesCubit extends Cubit<MenuCategoriesState>{

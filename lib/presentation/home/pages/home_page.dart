@@ -1,14 +1,15 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:menu_servex/core/configs/assets/app_images.dart';
 // import 'package:menu_servex/core/configs/assets/app_images.dart';
 import 'package:menu_servex/core/configs/theme/app_colors.dart';
 import 'package:menu_servex/domain/entity/menu_categories/categories.dart';
-import 'package:menu_servex/presentation/home/bloc/menu_categories_cubit.dart';
-import 'package:menu_servex/presentation/home/bloc/menu_categories_state.dart';
+import 'package:menu_servex/presentation/home/bloc/menuCategory/menu_categories_cubit.dart';
+import 'package:menu_servex/presentation/home/bloc/menuCategory/menu_categories_state.dart';
+import 'package:menu_servex/presentation/home/bloc/menuItems/menu_items_cubit.dart';
 // import 'package:menu_servex/core/configs/assets/app_images.dart';
 import 'package:menu_servex/presentation/home/widgets/basic_app_bar.dart';
-import 'package:menu_servex/presentation/home/widgets/menu_items.dart';
+import 'package:menu_servex/presentation/home/widgets/all_items.dart';
 import 'package:menu_servex/presentation/home/widgets/side_bar.dart';
 // import 'package:scrollable_list_tab_scroller/scrollable_list_tab_scroller.dart';
 
@@ -20,15 +21,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  final GlobalKey<MenuItemsState> _childKey = GlobalKey<MenuItemsState>();
+  final GlobalKey<AllItemsState> _childKey = GlobalKey<AllItemsState>();
 
   //  final List<GlobalKey> keys = [];
+  final ScrollController scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MenuCategoriesCubit()..getMenuCategories(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => MenuCategoriesCubit()..getMenuCategories(),
+        ),
+        BlocProvider(create: (context) => MenuItemsCubit()..getMenuItems()),
+      ],
       child: BlocBuilder<MenuCategoriesCubit, MenuCategoriesState>(
         builder: (context, state) {
           if (state is MenuCategoriesLoading) {
@@ -38,30 +50,74 @@ class _HomePageState extends State<HomePage> {
           }
 
           if (state is MenuCategoriesLoaded) {
+            //  for (var i = 0; i < state.categories.length; i++) {
+            //    keys.add(GlobalKey());
+            //  }
 
-          //  for (var i = 0; i < state.categories.length; i++) {
-          //    keys.add(GlobalKey());
-          //  }
-           
             return DefaultTabController(
               length: state.categories.length,
               child: Scaffold(
+                // backgroundColor: Colors.white,
                 drawerScrimColor: AppColors.bg.withAlpha(200),
                 drawer: Drawer(
                   backgroundColor: AppColors.bg,
                   clipBehavior: Clip.antiAlias,
                   elevation: 20,
                   shadowColor: AppColors.textPrimary,
-                  child: SideBar(categories: state.categories,
-                   onCatagoryTap: (int index){
-                    final menuState = _childKey.currentState;
-                    if (menuState != null) {
-                      menuState.scrollToIndex(index);
-                    }
-                  }),
+                  child: SideBar(
+                    categories: state.categories,
+                    onCatagoryTap: (int index) {
+                      final menuState = _childKey.currentState;
+                      if (menuState != null) {
+                        menuState.scrollToIndex(index);
+                      }
+                    },
+                  ),
                 ),
-                appBar: BasicAppBar(tabBar: _tabBar(state.categories)),
-                body:  MenuItems(categories: state.categories, key: _childKey),
+                appBar: BasicAppBar(),
+                body: CustomScrollView(
+                  controller: scrollController,
+                  slivers: <Widget>[
+                    SliverAppBar(
+                      expandedHeight: 260.0,
+                      
+                      automaticallyImplyLeading: false,
+                      floating: false,
+                      pinned: false,
+                      flexibleSpace: FlexibleSpaceBar(
+                        background: Image.asset(AppImages.homewWelcomeImg,fit: .cover,),
+                      ),
+                    ),
+                    SliverAppBar(
+                      backgroundColor: Colors.white,
+                      automaticallyImplyLeading: false,
+                      toolbarHeight: kToolbarHeight+15,
+                      pinned: true,
+                      flexibleSpace: Container(
+                        margin: const EdgeInsets.all(10.0),
+                        child: Builder(
+                          builder: (context) => Row(
+                            crossAxisAlignment: .center,
+                            mainAxisAlignment: .center,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Scaffold.of(context).openDrawer();
+                                },
+                                child: Icon(Icons.menu, size: 28),
+                              ),
+                              SizedBox(width: 10),
+                              Expanded(child: _tabBar(state.categories)),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: AllItems(categories: state.categories, key: _childKey, scrollController:scrollController)
+                    ,)
+                  ],
+                ),
               ),
             );
           }
@@ -72,6 +128,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // AllItems(categories: state.categories, key: _childKey),
+
+  // SliverAppBar(
+  //                   expandedHeight: 300.0,
+  //                   automaticallyImplyLeading: false,
+  //                   floating: false,
+  //                   pinned: false,
+  //                   flexibleSpace: FlexibleSpaceBar(
+  //                     background: Image.asset(AppImages.homewWelcomeImg),
+  //                   ),
+  //                 )
+
   Widget _tabBar(List<CategoriesEntity> state) {
     return TabBar(
       isScrollable: true,
@@ -80,7 +148,7 @@ class _HomePageState extends State<HomePage> {
       indicatorSize: TabBarIndicatorSize.tab,
       splashBorderRadius: BorderRadius.circular(30),
       overlayColor: WidgetStateProperty.all(Colors.transparent),
-      
+
       labelColor: AppColors.bg,
       labelStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       indicator: BoxDecoration(
@@ -91,9 +159,9 @@ class _HomePageState extends State<HomePage> {
       tabs: [for (final title in state) Tab(child: Text(title.category))],
       onTap: (int index) {
         final state = _childKey.currentState;
-  if (state != null) {
-    state.scrollToIndex(index);
-  }
+        if (state != null) {
+          state.scrollToIndex(index);
+        }
       },
     );
   }

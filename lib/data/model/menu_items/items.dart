@@ -1,10 +1,12 @@
+import 'package:menu_servex/domain/entity/menu_items/items.dart';
+
 class ItemsModel {
-  final String item;
-  final String description;
-  final String image;
-  final String diet;
-  final List price;
-  final List variationName;
+   String? item;
+   String? description;
+   String? image;
+   String? diet;
+   List? price;
+   List? variationName;
 
   ItemsModel({
     required this.item,
@@ -14,4 +16,19 @@ class ItemsModel {
     required this.price,
     required this.variationName,
   });
+
+ItemsModel.fromJson(Map<String,dynamic> data){
+    item = data["item"];
+    description = data["description"];
+    image = data["image"];
+    diet = data["diet"];
+    price = data["price"];
+    variationName = data["variation name"];
+  }
+}
+
+extension ItemsModelX on ItemsModel {
+  ItemsEntity toEntity(){
+    return ItemsEntity(item: item!, description: description!,image: image!,diet: diet!,price: price!,variationName: variationName!,);
+  }
 }
