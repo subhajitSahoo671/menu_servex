@@ -5,16 +5,18 @@ class ItemsModel {
    String? description;
    String? image;
    String? diet;
-   List? price;
-   List? variationName;
+  //  List? price;
+  //  List? variationName;
+   Map? variations;
 
   ItemsModel({
     required this.item,
     required this.description,
     required this.image,
     required this.diet,
-    required this.price,
-    required this.variationName,
+    // required this.price,
+    // required this.variationName,
+    required this.variations,
   });
 
 ItemsModel.fromJson(Map<String,dynamic> data){
@@ -22,13 +24,14 @@ ItemsModel.fromJson(Map<String,dynamic> data){
     description = data["description"];
     image = data["image"];
     diet = data["diet"];
-    price = data["price"];
-    variationName = data["variation name"];
+    // price = data["price"];
+    // variationName = data["variation name"];
+    variations = data["variation"];
   }
 }
 
 extension ItemsModelX on ItemsModel {
   ItemsEntity toEntity(){
-    return ItemsEntity(item: item!, description: description!,image: image!,diet: diet!,price: price!,variationName: variationName!,);
+    return ItemsEntity(item: item!, description: description!,image: image!,diet: diet!,variations:variations!);
   }
 }

@@ -108,7 +108,7 @@ class MenuFirebaseServiseImpl extends MenuFirebaseServise{
   //    // 5. Commit all writes to Firestore simultaneously
   // await batch.commit();
 
-    log("listotitems:$listOfItems");
+    // log("listotitems:$listOfItems");
     
       
       return right(listOfItems);

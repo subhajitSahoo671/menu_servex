@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_servex/firebase_options.dart';
+import 'package:menu_servex/presentation/cart/bloc/cartItems/cart_items_cubit.dart';
 import 'package:menu_servex/presentation/splashPage/splash.dart';
 import 'package:menu_servex/service_locator.dart';
 
@@ -23,13 +25,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ServeX',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF6C3823)),
+    return  BlocProvider<CartItemsCubit>(
+      create: (context) =>  CartItemsCubit()..getCartItemsList(),
+      child: MaterialApp(
+        title: 'ServeX',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF6C3823)),
+        ),
+        home: const SplashPage(),
       ),
-      home: const SplashPage(),
     );
   }
 }

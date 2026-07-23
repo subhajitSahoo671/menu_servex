@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:menu_servex/core/configs/assets/app_images.dart';
+import 'package:menu_servex/presentation/cart/pages/cart_page.dart';
 import 'package:menu_servex/presentation/home/widgets/about_dialog_box.dart';
 // import 'package:menu_servex/presentation/home/widgets/side_bar.dart';
 
@@ -50,7 +51,9 @@ class BasicAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           SizedBox(width: 5,),
           IconButton.filled(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => CartPage(),));
+            },
             icon: FaIcon(FontAwesomeIcons.cartShopping),
             color: Colors.white,
             iconSize: 18,

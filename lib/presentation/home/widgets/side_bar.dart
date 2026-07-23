@@ -37,7 +37,7 @@ class SideBar extends StatelessWidget {
                   return SizedBox(height: 15);
                 },
                 itemBuilder: (BuildContext context, int index) {
-                  log("pinku ${categories[index]}");
+                  // log("pinku ${categories[index]}");
                   final name = categories[index].category as String? ?? 'Unknown';
                   final pic = categories[index].banner ;
                   return InkWell(

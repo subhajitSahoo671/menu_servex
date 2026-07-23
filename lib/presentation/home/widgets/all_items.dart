@@ -78,7 +78,8 @@ class AllItemsState extends State<AllItems> {
 
   @override
   Widget build(BuildContext context) {
-    // var index = 0;
+    double screenWidth = MediaQuery.widthOf(context);
+
     return Builder(
       builder: (context) {
         tabContext = context;
@@ -96,7 +97,7 @@ class AllItemsState extends State<AllItems> {
                     SizedBox(
                       key: keys[index],
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding:  EdgeInsets.all((screenWidth*0.04).clamp(16, 30)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -104,7 +105,7 @@ class AllItemsState extends State<AllItems> {
                             Text(
                               catg.category,
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: (screenWidth*0.04).clamp(18, 24),
                                 fontWeight: FontWeight.w700,
                                 color: AppColors.textPrimary,
                                 letterSpacing: 0.5,
@@ -116,7 +117,7 @@ class AllItemsState extends State<AllItems> {
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: (screenWidth*0.04).clamp(14, 18),
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.textSecondary,
                                 letterSpacing: 0.3,
@@ -144,13 +145,13 @@ class AllItemsState extends State<AllItems> {
                             shrinkWrap: true,
                             // primary: false,
                             physics: NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(horizontal:(screenWidth*0.04).clamp(10, 30)),
                             gridDelegate:
                                  SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 200,
-                                  mainAxisExtent: 310,
-                                  crossAxisSpacing: 8,
-                                  mainAxisSpacing: 16,
+                                  maxCrossAxisExtent: (screenWidth*0.2).clamp(200, 240),
+                                  mainAxisExtent: (screenWidth*0.26).clamp(310, 360),
+                                  crossAxisSpacing: (screenWidth*0.01).clamp(8, 16),
+                                  mainAxisSpacing: (screenWidth*0.025).clamp(20, 40),
                                   childAspectRatio: 350/200
                                 ),
                             // itemCount: items.length,

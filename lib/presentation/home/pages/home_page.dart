@@ -4,6 +4,7 @@ import 'package:menu_servex/core/configs/assets/app_images.dart';
 // import 'package:menu_servex/core/configs/assets/app_images.dart';
 import 'package:menu_servex/core/configs/theme/app_colors.dart';
 import 'package:menu_servex/domain/entity/menu_categories/categories.dart';
+import 'package:menu_servex/presentation/cart/bloc/cartItems/cart_items_cubit.dart';
 import 'package:menu_servex/presentation/home/bloc/menuCategory/menu_categories_cubit.dart';
 import 'package:menu_servex/presentation/home/bloc/menuCategory/menu_categories_state.dart';
 import 'package:menu_servex/presentation/home/bloc/menuItems/menu_items_cubit.dart';
@@ -34,12 +35,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.widthOf(context);
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
+        BlocProvider<MenuCategoriesCubit>(
           create: (context) => MenuCategoriesCubit()..getMenuCategories(),
         ),
-        BlocProvider(create: (context) => MenuItemsCubit()..getMenuItems()),
+        BlocProvider<MenuItemsCubit>(create: (context) => MenuItemsCubit()..getMenuItems()),
       ],
       child: BlocBuilder<MenuCategoriesCubit, MenuCategoriesState>(
         builder: (context, state) {
@@ -79,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                   controller: scrollController,
                   slivers: <Widget>[
                     SliverAppBar(
-                      expandedHeight: 260.0,
+                      expandedHeight: (screenWidth*0.3).clamp(260, 400),
                       
                       automaticallyImplyLeading: false,
                       floating: false,
@@ -141,6 +143,8 @@ class _HomePageState extends State<HomePage> {
   //                 )
 
   Widget _tabBar(List<CategoriesEntity> state) {
+    double screenWidth = MediaQuery.widthOf(context);
+
     return TabBar(
       isScrollable: true,
       physics: BouncingScrollPhysics(),
@@ -150,7 +154,7 @@ class _HomePageState extends State<HomePage> {
       overlayColor: WidgetStateProperty.all(Colors.transparent),
 
       labelColor: AppColors.bg,
-      labelStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      labelStyle: TextStyle(fontSize: (screenWidth*0.03).clamp(16, 20), fontWeight: FontWeight.bold),
       indicator: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         color: AppColors.textPrimary,
