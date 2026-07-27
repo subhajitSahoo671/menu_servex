@@ -145,11 +145,11 @@ class AllItemsState extends State<AllItems> {
                             shrinkWrap: true,
                             // primary: false,
                             physics: NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.symmetric(horizontal:(screenWidth*0.04).clamp(10, 30)),
+                            padding: EdgeInsets.symmetric(horizontal:(screenWidth*0.02).clamp(10, 30)),
                             gridDelegate:
                                  SliverGridDelegateWithMaxCrossAxisExtent(
                                   maxCrossAxisExtent: (screenWidth*0.2).clamp(200, 240),
-                                  mainAxisExtent: (screenWidth*0.26).clamp(310, 360),
+                                  mainAxisExtent: (screenWidth*0.322).clamp(290, 365),
                                   crossAxisSpacing: (screenWidth*0.01).clamp(8, 16),
                                   mainAxisSpacing: (screenWidth*0.025).clamp(20, 40),
                                   childAspectRatio: 350/200

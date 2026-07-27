@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_servex/core/configs/assets/app_images.dart';
 // import 'package:menu_servex/core/configs/assets/app_images.dart';
 import 'package:menu_servex/core/configs/theme/app_colors.dart';
+import 'package:menu_servex/data/model/cart_items/cart_items.dart';
 import 'package:menu_servex/domain/entity/menu_categories/categories.dart';
 import 'package:menu_servex/presentation/cart/bloc/cartItems/cart_items_cubit.dart';
 import 'package:menu_servex/presentation/home/bloc/menuCategory/menu_categories_cubit.dart';
@@ -76,18 +79,46 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
-                appBar: BasicAppBar(),
+                appBar: PreferredSize(
+                  preferredSize: Size.fromHeight(kToolbarHeight),
+                  child: BlocBuilder<CartItemsCubit,List<CartItemsModel>>(
+                    builder: (context,cartItemsList) {
+                      return BasicAppBar(cartItems:cartItemsList);
+                    }
+                  ),
+                ),
                 body: CustomScrollView(
                   controller: scrollController,
                   slivers: <Widget>[
                     SliverAppBar(
-                      expandedHeight: (screenWidth*0.3).clamp(260, 400),
+                      expandedHeight: (screenWidth*0.7).clamp(240, 450),
                       
                       automaticallyImplyLeading: false,
                       floating: false,
                       pinned: false,
                       flexibleSpace: FlexibleSpaceBar(
-                        background: Image.asset(AppImages.homewWelcomeImg,fit: .cover,),
+                        background: LayoutBuilder(
+                          builder: (context, constraints) => 
+                          Padding(
+                            padding:  EdgeInsets.symmetric(horizontal: constraints.maxWidth > 756 ? 12:0,vertical: 5),
+                            child: ClipRRect(
+                              borderRadius: BorderRadiusGeometry.circular(constraints.maxWidth > 756 ?20:0),
+                              child: Container(
+                             decoration: BoxDecoration(
+                              image: DecorationImage(image: AssetImage(AppImages.homewWelcomeImg,),fit: .cover)
+                             ),
+                                child: BackdropFilter(
+                                  filter: .blur(sigmaX: 25,sigmaY: 25),
+                                  child: Center(
+                                    child: Container(
+                                      
+                                      constraints: BoxConstraints(maxWidth: 750), 
+                                      child: Image.asset(AppImages.homewWelcomeImg,fit: .cover,)),
+                                  ),
+                                ),
+                              )),
+                          ),
+                        ),
                       ),
                     ),
                     SliverAppBar(
@@ -103,6 +134,8 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: .center,
                             children: [
                               InkWell(
+                                overlayColor: .all(Colors.transparent),
+                              splashColor: Colors.transparent,
                                 onTap: () {
                                   Scaffold.of(context).openDrawer();
                                 },

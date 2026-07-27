@@ -40,7 +40,8 @@ class SideBar extends StatelessWidget {
                   // log("pinku ${categories[index]}");
                   final name = categories[index].category as String? ?? 'Unknown';
                   final pic = categories[index].banner ;
-                  return InkWell(
+                  return InkWell(overlayColor: .all(Colors.transparent),
+                              splashColor: Colors.transparent,
                     onTap: () {
                       Navigator.pop(context);
                       onCatagoryTap(index);

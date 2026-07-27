@@ -31,8 +31,8 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
 
   @override
   Widget build(BuildContext context) {
-
-    int totalAmount=  widget.items.sortedVariations[_selectedValue]! * itemCount;
+    int totalAmount =
+        widget.items.sortedVariations[_selectedValue]! * itemCount;
 
     return Container(
       padding: .all(12),
@@ -51,15 +51,17 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                 title: Padding(
                   padding: const EdgeInsets.only(bottom: 4.0),
                   child: InkWell(
+                    overlayColor: .all(Colors.transparent),
+                              splashColor: Colors.transparent,
                     onTap: () => Navigator.pop(context),
                     child: ClipRRect(
                       borderRadius: BorderRadiusGeometry.circular(9999),
                       child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 20,sigmaY: 20),
+                        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
                         child: CircleAvatar(
                           radius: 25,
                           backgroundColor: Colors.transparent,
-                          child: Icon(Icons.close,size: 28,),
+                          child: Icon(Icons.close, size: 28),
                         ),
                       ),
                     ),
@@ -75,7 +77,9 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(20),
+                      ),
                       color: Colors.white,
                     ),
                     // margin: const EdgeInsets.only(right: 12, left: 12, top: 12),
@@ -102,7 +106,7 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.white,
                   ),
-                  padding: .only(left: 12,right: 12, bottom: 4,top: 4),
+                  padding: .only(left: 12, right: 12, bottom: 4, top: 4),
                   child: Row(
                     mainAxisAlignment: .spaceBetween,
                     crossAxisAlignment: .center,
@@ -150,7 +154,7 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                           ],
                         ),
                       ),
-                      SizedBox(width: 8,),
+                      SizedBox(width: 8),
                       //itemCount
                       Row(
                         children: [
@@ -239,7 +243,11 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: widget.items.sortedVariations.length,
                             itemBuilder: (BuildContext context, int index) {
-                            var variationName =  widget.items.sortedVariations.keys.elementAt(index);
+                              var variationName = widget
+                                  .items
+                                  .sortedVariations
+                                  .keys
+                                  .elementAt(index);
                               return Material(
                                 color: Colors.transparent,
                                 child: RadioListTile<String>(
@@ -252,8 +260,14 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                                           variationName,
                                           style: TextStyle(
                                             fontSize: 16,
-                                            fontWeight: _selectedValue == variationName ? FontWeight.w600: .w400,
-                                            color:  _selectedValue == variationName ? AppColors.textPrimary :AppColors.textSecondary,
+                                            fontWeight:
+                                                _selectedValue == variationName
+                                                ? FontWeight.w600
+                                                : .w400,
+                                            color:
+                                                _selectedValue == variationName
+                                                ? AppColors.textPrimary
+                                                : AppColors.textSecondary,
                                           ),
                                         ),
                                       ),
@@ -261,8 +275,13 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                                         "₹${widget.items.sortedVariations[variationName]}",
                                         style: TextStyle(
                                           fontSize: 15,
-                                          fontWeight: _selectedValue == variationName ? FontWeight.w600: .w400,
-                                          color:  _selectedValue == variationName ? AppColors.textPrimary :AppColors.textSecondary,
+                                          fontWeight:
+                                              _selectedValue == variationName
+                                              ? FontWeight.w600
+                                              : .w400,
+                                          color: _selectedValue == variationName
+                                              ? AppColors.textPrimary
+                                              : AppColors.textSecondary,
                                         ),
                                       ),
                                     ],
@@ -271,7 +290,8 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                                   contentPadding: .symmetric(horizontal: 8),
                                   horizontalTitleGap: 0,
                                   groupValue: _selectedValue,
-                                  controlAffinity: ListTileControlAffinity.trailing,
+                                  controlAffinity:
+                                      ListTileControlAffinity.trailing,
                                   onChanged: (String? value) {
                                     setState(() {
                                       _selectedValue = value;
@@ -284,70 +304,123 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                         ],
                       ),
                     ),
-                SizedBox(height: 120,)
-                
+                    SizedBox(height: 120),
                   ],
                 ),
               ),
             ],
           ),
-       
-       Positioned(
-      bottom: 0,
-      right: 0,
-      left: 0,
-      child: Container(height: 80,
-      color: Colors.transparent,
-      padding: EdgeInsets.symmetric(vertical: 10,horizontal: 4),
-      child: Container(
-        // height: 50,
-        padding: EdgeInsets.all(2),
-        decoration: BoxDecoration(
-        color: AppColors.bg,
-        borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: AppColors.textPrimary.withAlpha(50)),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 7,
-            spreadRadius: 0,
-            offset: Offset(0, 2),
-            color: AppColors.textPrimary.withAlpha(50)
-          )
-        ]
-      ),
-      child: Row(
-        children: [
-              //price 
-              Expanded(child: Center(child: Text("₹${totalAmount.toStringAsFixed(2)}",style: TextStyle(fontSize: 16,fontWeight: .w600,color: AppColors.primary)))),
-              // AddToCartButton
-              Expanded(
-                flex: 2,
-                child: FilledButton(onPressed: () {
-                  context.read<CartItemsCubit>().addCartItem(CartItemsModel(item: widget.items.item, image: widget.items.image, diet: widget.items.diet, quantity: itemCount, variation: _selectedValue!,price: widget.items.sortedVariations[_selectedValue]!));
-                  //  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                  //  return  CartPage(items: widget.items);
-                  //  },));
-                }, child: Container(
-                  decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
+
+          Positioned(
+            bottom: 0,
+            right: 0,
+            left: 0,
+            child: Container(
+              height: 80,
+              color: Colors.transparent,
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+              child: Container(
+                // height: 50,
+                padding: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  color: AppColors.bg,
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(
+                    color: AppColors.textPrimary.withAlpha(50),
                   ),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: .center,
-                      crossAxisAlignment: .center,
-                      children: [
-                        Icon(Icons.shopping_cart_outlined,size: 18,color: AppColors.bg,),
-                        SizedBox(width: 8,),
-                        Text("Add To Cart",style: TextStyle(fontSize: 14,fontWeight: .w400,color: AppColors.bg),)
-                      ],
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 7,
+                      spreadRadius: 0,
+                      offset: Offset(0, 2),
+                      color: AppColors.textPrimary.withAlpha(50),
                     ),
-                  ),
-                )),
-              )
-        ],
-      ),
-      ),
-      ))
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    //price
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          "₹${totalAmount.toStringAsFixed(2)}",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: .w600,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ),
+                    ),
+                    // AddToCartButton
+                    Expanded(
+                      flex: 2,
+                      child: BlocBuilder<CartItemsCubit, List<CartItemsModel>>(
+                        builder: (context, cartItemsList) {
+                          CartItemsModel cartItem = CartItemsModel(
+                                item: widget.items.item,
+                                image: widget.items.image,
+                                diet: widget.items.diet,
+                                quantity: itemCount,
+                                variation: _selectedValue!,
+                                price: widget.items.sortedVariations[_selectedValue]!,
+                              );
+                          return FilledButton(
+                            onPressed: () {
+                              if (cartItemsList.contains(cartItem)) {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                      return CartPage(items: widget.items);
+                                    },
+                                  ),
+                                );
+                              }
+                              else{
+                                context.read<CartItemsCubit>().addCartItem(cartItem);
+                        
+                                // setState(() {
+                                  
+                                // });
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: .center,
+                                  crossAxisAlignment: .center,
+                                  children: [
+                                    Icon(
+                                      Icons.shopping_cart_outlined,
+                                      size: 18,
+                                      color: AppColors.bg,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Text(
+                                     cartItemsList.contains(cartItem) ?"Go To Cart" : "Add To Cart",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: .w400,
+                                        color: AppColors.bg,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

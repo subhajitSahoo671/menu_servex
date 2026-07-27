@@ -1,14 +1,16 @@
-class CartItemsModel {
+import 'package:equatable/equatable.dart';
+
+class CartItemsModel extends Equatable{
       final  String item;
   //  String? description;
    final String image;
   final  String diet;
   final int price;
   final  String variation;
-   final int quantity;
+    int quantity;
   //  Map? variation;
 
-  CartItemsModel({
+   CartItemsModel({
     required this.item,
     // required this.description,
     required this.image,
@@ -18,4 +20,7 @@ class CartItemsModel {
     required this.variation,
     // required this.variation,
   });
+  
+  @override
+  List<Object?> get props => [item, image, diet, price, variation];
 }
