@@ -13,18 +13,24 @@ class MenuItemsCubit extends Cubit<MenuItemsState>{
   }
 
   Future<void> getMenuItems() async{
-    // log("getMenuCategories called");
+    if (isClosed) return;
+
     try {
-      var data = await sl<GetMenuItemsUsecase>().call().timeout(const Duration(seconds: 20));
+      final data = await sl<GetMenuItemsUsecase>().call().timeout(const Duration(seconds: 20));
+      if (isClosed) return;
+
       return data.fold((l) {
         log("getMenuItems failed: $l");
+        if (isClosed) return;
         emit(MenuItemsFailure());
       }, (r) {
         // log("getMenuItems success: $r items");
+        if (isClosed) return;
         emit(MenuItemsLoaded(items: r));
-      },);
+      });
     } catch (e) {
       log("getMenuItems timeout or error: $e");
+      if (isClosed) return;
       emit(MenuItemsFailure());
     }
   }

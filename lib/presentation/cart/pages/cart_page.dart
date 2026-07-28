@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:menu_servex/core/configs/constants.dart';
 import 'package:menu_servex/core/configs/theme/app_colors.dart';
 import 'package:menu_servex/data/model/cart_items/cart_items.dart';
 import 'package:menu_servex/domain/entity/menu_items/items.dart';
@@ -7,15 +8,15 @@ import 'package:menu_servex/presentation/cart/bloc/cartItems/cart_items_cubit.da
 import 'package:menu_servex/presentation/cart/widgets/cart_item_card.dart';
 
 class CartPage extends StatelessWidget {
-  const CartPage({super.key, this.items});
+  const CartPage({super.key, this.items,});
 
   final ItemsEntity? items;
+  // final String? tableNum;
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.widthOf(context);
-     var totalPrice = context.read<CartItemsCubit>().totalPrice();
-    var tax = totalPrice * 0.05;
+    final String displayTableNum = TableNum.tableNum;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -28,6 +29,12 @@ class CartPage extends StatelessWidget {
           child: Icon(Icons.arrow_back_ios_new),
         ),
         title: Text("My Cart List"),
+        actions: [
+          ElevatedButton.icon(onPressed: () {
+            
+          }, label: Text(displayTableNum,style: TextStyle(fontSize: 16),),
+          icon: Icon(Icons.table_bar,size: 20,),)
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.only(
@@ -37,6 +44,8 @@ class CartPage extends StatelessWidget {
         ),
         child: BlocBuilder<CartItemsCubit, List<CartItemsModel>>(
           builder: (BuildContext context, cartItems) {
+              var totalPrice = context.read<CartItemsCubit>().totalPrice();
+    var tax = totalPrice * 0.05;
          return cartItems.isEmpty 
          ? Center(child: Column(
           mainAxisSize: .min,

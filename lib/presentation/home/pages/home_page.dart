@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_servex/core/configs/assets/app_images.dart';
+import 'package:menu_servex/core/configs/constants.dart';
 // import 'package:menu_servex/core/configs/assets/app_images.dart';
 import 'package:menu_servex/core/configs/theme/app_colors.dart';
 import 'package:menu_servex/data/model/cart_items/cart_items.dart';
@@ -18,7 +19,9 @@ import 'package:menu_servex/presentation/home/widgets/side_bar.dart';
 // import 'package:scrollable_list_tab_scroller/scrollable_list_tab_scroller.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key,  this.tableNum});
+
+  final String? tableNum;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -29,6 +32,12 @@ class _HomePageState extends State<HomePage> {
 
   //  final List<GlobalKey> keys = [];
   final ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    TableNum.tableNum=widget.tableNum as String;
+  }
 
   @override
   void dispose() {
@@ -62,6 +71,42 @@ class _HomePageState extends State<HomePage> {
             return DefaultTabController(
               length: state.categories.length,
               child: Scaffold(
+                floatingActionButton: Row(
+                  mainAxisAlignment: .end,
+                  mainAxisSize: .min,
+                  children: [
+//                   widget.tableNum != null ? FloatingActionButton(
+//                     heroTag: "tableNumber",
+//                     tooltip: "Table Number",
+//                   backgroundColor:  AppColors.bg.withAlpha(250),
+//                   shape: CircleBorder(),
+//                   elevation: 0,
+//                   onPressed: () {
+                  
+//                 },
+//                 child: ClipRRect(
+//  borderRadius: BorderRadiusGeometry.circular(9999),
+//                   child: Center(
+//                     child: Text("${widget.tableNum}",style: TextStyle(fontSize: 16,fontWeight: .w600),),
+//                         ),
+//                 ),): Container(),
+//                 SizedBox(width: 15,),
+                FloatingActionButton(
+                  heroTag: "orders",
+                  tooltip: "Orders",
+                   backgroundColor:  AppColors.bg.withAlpha(250),
+                  shape: CircleBorder(),
+                  elevation: 0,
+                  onPressed: () {
+                  
+                },
+                child: ClipRRect(
+ borderRadius: BorderRadiusGeometry.circular(9999),
+                  child: Center(
+                    child: Icon(Icons.shopping_bag,size: 26,),
+                        ),
+                ),)
+                ],),
                 // backgroundColor: Colors.white,
                 drawerScrimColor: AppColors.bg.withAlpha(200),
                 drawer: Drawer(

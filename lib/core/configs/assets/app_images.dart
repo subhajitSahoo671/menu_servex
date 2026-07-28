@@ -15,6 +15,9 @@ class AppImages {
     static const String homewWelcomeImg = 
     "${basePath}homewWelcomeImg$format";
 
+    static const String landingImg = 
+    "${basePath}landingImg$format";
+
     static const String vegIcon = 
     "${basePath}vegIcon$svgFormat";
 

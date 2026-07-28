@@ -4,10 +4,12 @@ import 'package:menu_servex/core/configs/theme/app_colors.dart';
 import 'package:menu_servex/presentation/home/pages/home_page.dart';
 
 class Customerdetails extends StatelessWidget {
-  Customerdetails({super.key});
+  Customerdetails({super.key, required this.tableNum});
+
+  final String tableNum;
 
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phNumberController = TextEditingController();
+  // final TextEditingController _phNumberController = TextEditingController();
   final TextEditingController _tableNumberController = TextEditingController();
 
   @override
@@ -88,20 +90,23 @@ class Customerdetails extends StatelessWidget {
       ),
     );
   }
-
-  Widget _numberField() {
-    return TextField(
-      controller: _phNumberController,
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        fillColor: Color(0xffF5F3E4),
-        filled: true,
-        contentPadding: EdgeInsets.all(20),
-        label: Text("Phone Number"),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
-      ),
-    );
+  Widget _numberField(){
+    return Text(tableNum);
   }
+
+  // Widget _numberField() {
+  //   return TextField(
+  //     controller: _phNumberController,
+  //     keyboardType: TextInputType.number,
+  //     decoration: InputDecoration(
+  //       fillColor: Color(0xffF5F3E4),
+  //       filled: true,
+  //       contentPadding: EdgeInsets.all(20),
+  //       label: Text("Phone Number"),
+  //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+  //     ),
+  //   );
+  // }
 
   Widget _tableNumber(){
     return TextField(
@@ -120,7 +125,7 @@ class Customerdetails extends StatelessWidget {
   Widget _continueButton(context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(),));
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(),));
       },
       child: Container(
         // height: 50,
