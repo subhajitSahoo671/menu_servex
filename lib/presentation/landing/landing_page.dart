@@ -17,9 +17,12 @@ class LandingPage extends StatelessWidget {
                 height: double.infinity,
                 width: double.infinity,
                 child: Image.asset( AppImages.landingImg,fit:.cover)),
+               Positioned.fill(child: Container(
+                color: Colors.black12.withAlpha(100),
+               )),
                 Positioned(
-                    top: 60,
-                    left: 40,
+                    top: 80,
+                    left: 60,
                     child: Image.asset(AppImages.logo,height: 100,width: 100,color: Color.fromARGB(255, 189, 129, 32),)),
                 Positioned.fill(
                         left: 16,
@@ -73,7 +76,7 @@ class LandingPage extends StatelessWidget {
          ,Positioned(
             left: 50,
             right: 50,
-            bottom: 75,
+            bottom: 85,
             child:   Column(
                 crossAxisAlignment: .center,
                 mainAxisSize: .min,
@@ -122,7 +125,7 @@ class LandingPage extends StatelessWidget {
 
         const SizedBox(height: 16),
 
-        // I'M A WAITER BUTTON
+        // view menu button
         SizedBox(
           width: double.infinity,
           height: 52,

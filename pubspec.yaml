@@ -38,6 +38,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   get_it: ^9.2.1
   firebase_core: ^4.6.0
+  firebase_auth: ^6.5.6
   font_awesome_flutter: ^11.0.0
   # scrollable_list_tab_scroller: ^3.1.1
   dartz: ^0.10.1
@@ -46,6 +47,8 @@ dependencies:
   svg_flutter: ^0.0.1
   equatable: ^2.1.0
   mobile_scanner: ^7.4.0
+  random_string: ^2.3.1
+  intl: ^0.20.3
 
 dev_dependencies:
   flutter_test:

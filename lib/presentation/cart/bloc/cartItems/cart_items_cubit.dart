@@ -37,6 +37,11 @@ class CartItemsCubit extends Cubit<List<CartItemsModel>> {
     emit(List.from(cartItemsList));
   }
 
+  void clearCartItems() {
+    cartItemsList.clear();
+    emit(List.from(cartItemsList));
+  }
+
   double totalPrice(){
     double total = 0.0;
 

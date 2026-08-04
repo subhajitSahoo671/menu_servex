@@ -16,6 +16,7 @@ import 'package:menu_servex/presentation/home/bloc/menuItems/menu_items_cubit.da
 import 'package:menu_servex/presentation/home/widgets/basic_app_bar.dart';
 import 'package:menu_servex/presentation/home/widgets/all_items.dart';
 import 'package:menu_servex/presentation/home/widgets/side_bar.dart';
+import 'package:menu_servex/presentation/orders/pages/all_orders.dart';
 // import 'package:scrollable_list_tab_scroller/scrollable_list_tab_scroller.dart';
 
 class HomePage extends StatefulWidget {
@@ -36,7 +37,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    TableNum.tableNum=widget.tableNum as String;
+   if (widget.tableNum != null) {
+      TableNum.tableNum = widget.tableNum as String;
+   }
   }
 
   @override
@@ -98,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                   shape: CircleBorder(),
                   elevation: 0,
                   onPressed: () {
-                  
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AllOrdersScreen(),));
                 },
                 child: ClipRRect(
  borderRadius: BorderRadiusGeometry.circular(9999),

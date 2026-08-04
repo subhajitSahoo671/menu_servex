@@ -20,6 +20,17 @@ class CartItemsModel extends Equatable{
     required this.variation,
     // required this.variation,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'item': item,
+      // 'image': image,
+      'diet': diet,
+      'quantity': quantity,
+      'price': price,
+      'variation': variation,
+    };
+  }
   
   @override
   List<Object?> get props => [item, image, diet, price, variation];

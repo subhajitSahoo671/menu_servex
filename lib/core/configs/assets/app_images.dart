@@ -12,6 +12,9 @@ class AppImages {
     static const String customerDetailsBG = 
     "${basePath}customerDetailsBG1$format";
 
+    static const String authBG = 
+    "${basePath}authBG$format";
+
     static const String homewWelcomeImg = 
     "${basePath}homewWelcomeImg$format";
 

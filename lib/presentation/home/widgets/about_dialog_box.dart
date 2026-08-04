@@ -1,12 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:menu_servex/core/configs/theme/app_colors.dart';
+import 'package:menu_servex/presentation/auth/pages/sign_in.dart';
 
 class AboutDialogBox extends StatelessWidget {
   const AboutDialogBox({super.key});
+  
+  
 
   @override
   Widget build(BuildContext context) {
+    Future<void> signedOut() async{
+   try {
+    await FirebaseAuth.instance.signOut(); 
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SignIn(),));
+    print("User successfully signed out");
+  } catch (e) {
+    print("Error signing out: $e");
+  }
+  }
     return Dialog(
       insetAnimationCurve: Curves.bounceInOut,
       insetAnimationDuration: Duration(milliseconds: 300),
@@ -54,6 +67,14 @@ class AboutDialogBox extends StatelessWidget {
                         ),
                       ],
                     ),
+                    Spacer(),
+                    //signout button
+                    Align(
+                      alignment: .bottomCenter,
+                      child: FilledButton(onPressed: () {
+                        signedOut();
+                      }, child: Text("Sign Out")),
+                    )
                   ],
                 ),
               ),
