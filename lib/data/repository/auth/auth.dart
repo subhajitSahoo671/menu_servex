@@ -8,13 +8,13 @@ import 'package:menu_servex/service_locator.dart';
 class AuthRepositoryImpl extends AuthRepository{
   @override
   Future<Either> signIn(SignInModel signInUserCredentials) {
-    return sl<AuthFirebaseServise>().signIn(signInUserCredentials,);
+    return sl<AuthFirebaseServise>().signIn(signInUserCredentials);
   }
 
   @override
   Future<Either> signUp(SignUpModel signUpUserCredentials) {
 
-       return sl<AuthFirebaseServise>().signUp(signUpUserCredentials,);
+       return sl<AuthFirebaseServise>().signUp(signUpUserCredentials);
 
   }
   

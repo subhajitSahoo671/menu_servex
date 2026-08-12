@@ -10,4 +10,8 @@ class AppColors {
 
   static const textSecondary = Color(0xff412812);
 
+  static const primaryOrange = Color(0xFFC46A14);
+
+  static const gold = Color(0xFFC58A2B);  
+
 }

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_servex/firebase_options.dart';
+import 'package:menu_servex/presentation/auth/pages/auth_wrapper.dart';
 import 'package:menu_servex/presentation/cart/bloc/cartItems/cart_items_cubit.dart';
 import 'package:menu_servex/presentation/splashPage/splash.dart';
 import 'package:menu_servex/service_locator.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF6C3823)),
         ),
-        home: const SplashPage(),
+        home: const AuthWrapper(),
       ),
     );
   }

@@ -19,20 +19,20 @@ class AuthFirebaseServiseImpl extends AuthFirebaseServise {
         password: signInUserCredentials.password,
       );
 
-    //    User? user = FirebaseAuth.instance.currentUser;
+       User? user = FirebaseAuth.instance.currentUser;
 
-    // if (user != null) {
-    //   String? idToken = await user.getIdToken();
-    //   if(idToken != null){
-        
-    //   }
-    // }
+          var docSnapshot = await FirebaseFirestore.instance.collection("Users").doc(user?.uid).get();
   
-
-      // ignore: avoid_print
+        if (docSnapshot.exists) {
+            // ignore: avoid_print
       print("Login Successful");
 
       return Right("Signin Successful");
+        } else {
+           await FirebaseAuth.instance.signOut();
+          return left("invalid-email");
+        }
+    
     } on FirebaseAuthException catch (e) {
       String message = "";
 

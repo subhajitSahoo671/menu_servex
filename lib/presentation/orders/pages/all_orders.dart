@@ -5,7 +5,7 @@ import 'package:menu_servex/core/configs/constants.dart';
 import 'package:menu_servex/data/model/orderDetails/order_details.dart';
 import 'package:menu_servex/domain/entity/orders/order_details.dart';
 import 'package:menu_servex/domain/usecases/orders/get_user_orders.dart';
-import 'package:menu_servex/presentation/auth/widgets/custom_snackbar.dart';
+import 'package:menu_servex/common/custom_snackbar.dart';
 import 'package:menu_servex/presentation/orders/widgets/user_orders_card.dart';
 
 class AllOrdersScreen extends StatefulWidget {
@@ -79,7 +79,7 @@ class _AllOrdersScreenState extends State<AllOrdersScreen> {
               return Center(child: Center(child: Text('Unable to load orders')));
             }
 
-            //user is logged in
+        
             if (snapshot.hasData) {
         var allOrders = snapshot.data!.docs;
         return SingleChildScrollView(
@@ -112,7 +112,7 @@ class _AllOrdersScreenState extends State<AllOrdersScreen> {
         );
             }
 
-            //user is not logged in
+           
             return const Center(child: Text('No orders found'));
           },
         ),

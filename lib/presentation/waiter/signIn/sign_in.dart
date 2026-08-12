@@ -1,38 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:menu_servex/core/configs/assets/app_images.dart';
 import 'package:menu_servex/core/configs/theme/app_colors.dart';
+import 'package:menu_servex/data/model/auth/sign_in.dart';
 import 'package:menu_servex/data/model/auth/sign_up.dart';
+import 'package:menu_servex/domain/usecases/auth/sign_in.dart';
 import 'package:menu_servex/domain/usecases/auth/sign_up.dart';
-import 'package:menu_servex/presentation/auth/pages/sign_in.dart';
+import 'package:menu_servex/domain/usecases/waiter/auth/sign_in.dart';
 import 'package:menu_servex/presentation/auth/pages/sign_up.dart';
 import 'package:menu_servex/common/custom_snackbar.dart';
 import 'package:menu_servex/presentation/auth/widgets/custom_text_feild.dart';
-import 'package:menu_servex/presentation/auth/widgets/employee_dialog.dart';
 import 'package:menu_servex/presentation/home/pages/home_page.dart';
 import 'package:menu_servex/presentation/landing/landing_page.dart';
+import 'package:menu_servex/presentation/waiter/dashBoard/pages/waiter_dashboard.dart';
 
-class SignUp extends StatefulWidget {
- const SignUp({super.key});
+class WaiterSignIn extends StatelessWidget {
+  WaiterSignIn({super.key});
 
-  @override
-  State<SignUp> createState() => _SignUpState();
-}
-
-class _SignUpState extends State<SignUp> {
   // final String tableNum;
-  final TextEditingController _nameController = TextEditingController();
 
+  // final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-
   final TextEditingController _passwordController = TextEditingController();
 
-        bool isEmployeeDialogOpen = false;
-
+  
 
   @override
   Widget build(BuildContext context) {
   Color gold = Color(0xFFC58A2B);
-     Color primaryColor = Color(0xFFC46A14);
+    //  Color primaryColor = Color(0xFFC46A14);
     return Scaffold(
       body: Stack(
         children: [
@@ -52,11 +47,10 @@ class _SignUpState extends State<SignUp> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(height: 60),
+                    SizedBox(height: 40),
                    Column(
                     // mainAxisAlignment: .spaceBetween,
                     children: [
-                       
                   
                       Hero(
                       tag: 1,
@@ -67,7 +61,8 @@ class _SignUpState extends State<SignUp> {
                         color: Color.fromARGB(255, 189, 129, 32),
                       ),
                     ),
-                    SizedBox(
+          
+                     SizedBox(
                       height: 50,
                       width: double.infinity,
                       child: Row(
@@ -94,110 +89,49 @@ class _SignUpState extends State<SignUp> {
                         ],
                       ),
                     ),
-                      RichText(
+                    SizedBox(height: 8,),
+                         
+                    RichText(
                       text: TextSpan(
-                        text: "Create",
+                        text: "Waiter ",
                         style: TextStyle(
-                          color: gold,
-                          fontSize: 35,
-                          fontWeight: FontWeight.w600,
-                          fontStyle: .italic
+                          color: AppColors.bg,
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: .italic 
                         ),
                         children: [
                           TextSpan(
-                        text: " Account",
-                        style: TextStyle(
-                          color: AppColors.bg,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: .normal 
-                        ),)
+                        text: " Sign In ",
+                         style: TextStyle(
+                          color: gold,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600,
+                          fontStyle: .normal
+                        ),
+                       )
                         ]
                       ),
                     ),
+                    // SizedBox(height: 2,),
+                     Text(
+                              "Sign in to manage orders and serve better",
+                              style: TextStyle(color: AppColors.bg,fontSize: 15),
+                            ),
                     ],
                    ),
                     SizedBox(height: 30),
                     _customerDetails(),
-                    SizedBox(height: 50),
-                    _signUpButton(context),
+                    SizedBox(height: 60),
+                    _signInButton(context),
                     SizedBox(height: 70,),
-                     Row(
-                      mainAxisAlignment: .center,
-                      children: [
-                     
-                       Text(
-                        "Already have an account? ",
-                        style: TextStyle(
-                           color: AppColors.bg,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        
-                      ),
-                      
-                    
-                     GestureDetector(
-                      onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => SignIn()),
-                          );
-                        },
-                       child: Text(
-                           "Sign In",
-                          style: TextStyle(
-                            color: primaryColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                          ),),
-                     ),
-                      ],
-                     )
+                  _iAmACook(context),
                   ],
                 ),
               ),
             ),
           ),
-          Positioned(
-          // top: 10,
-          right: 10,
-          child: SafeArea(
-            child: OutlinedButton(
-                    
-                    onPressed: () {
-                      setState(() {
-                        isEmployeeDialogOpen = !isEmployeeDialogOpen;
-                      });
-                    },
-                    style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-                      side: BorderSide(
-                        color: AppColors.primaryOrange,
-                        width: 1.5,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    
-                     child:  Text(
-                      "Empl",
-                      style: TextStyle(
-                        color: AppColors.gold,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.2,
-                      ),
-                    ),
-                  ),
-          ),
-        ) ,
-
-      if(isEmployeeDialogOpen) Positioned(
-          top: 85,
-          right: 15,
-          child: EmployeeDialog())
+        IconButton(onPressed: () => Navigator.pop(context),icon: Icon(Icons.arrow_back_ios_new,color: AppColors.gold,size: 24,),),
         ],
       ),
     );
@@ -222,20 +156,12 @@ class _SignUpState extends State<SignUp> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-             CustomTextFeild(
-              controller: _nameController,
-              keyboardType: TextInputType.name,
-              label: "Full Name",
-              obscureText: false,
-              icon: Icons.person_outline
-            ),
-            SizedBox(height: 20),
             CustomTextFeild(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               label: "Email",
               obscureText: false,
-              icon: Icons.mail_outline_outlined
+              icon: Icons.person_2_outlined
             ),
             SizedBox(height: 20),
             CustomTextFeild(
@@ -251,23 +177,25 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget _signUpButton(BuildContext context) {
+  Widget _signInButton(BuildContext context) {
      Color primaryColor = Color(0xFFC46A14);
     return GestureDetector(
       onTap: () async{
-      var res = await SignUpUsecase().call(param: SignUpModel(email: _emailController.text.trim(), password: _passwordController.text.trim(), fullName: _nameController.text.trim()));
+        var res = await WaiterSignInUsecase().call(param: SignInModel(email: _emailController.text.trim(), password: _passwordController.text.trim()));
      
      res.fold((l) {
-        context.showSnackBar(message: l.toString(), backgroundColor: Colors.red);
+              context.showSnackBar(message: l.toString(), backgroundColor: Colors.red);
+
+       
      }, (r) {
       
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => SignIn()),
+          MaterialPageRoute(builder: (context) => WaiterDashboard()),
         );
                 context.showSnackBar(message: r.toString(), backgroundColor: Colors.green);
+
      },);
-       
       },
       child: Container(
         // height: 50,
@@ -281,16 +209,60 @@ class _SignUpState extends State<SignUp> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
           child: Text(
-            "Sign Up",
+            "Sign In",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Color(0xffF5F3E4),
+              color: AppColors.bg,
               fontSize: 20,
             ),
           ),
         ),
       ),
     );
+  }
+
+  Widget _iAmACook(BuildContext context){
+    //  Color primaryColor = Color(0xFFC46A14);
+  Color gold = Color(0xFFC58A2B);
+
+    return  
+        Container(
+        constraints: BoxConstraints(maxWidth: 500),
+          width: double.infinity,
+          // height: 52,
+          child: OutlinedButton.icon(
+            
+            onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(),));
+            },
+            icon:  Icon(
+                Icons.soup_kitchen,
+                color: gold,
+                size: 26,
+              ),
+            
+            style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
+              side: BorderSide(
+                color: gold,
+                width: 1.5,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            
+             label:  Text(
+              "I'm a Cook",
+              style: TextStyle(
+                color: gold,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                // letterSpacing: 0.5,
+              ),
+            ),
+          ),
+        );
   }
 }

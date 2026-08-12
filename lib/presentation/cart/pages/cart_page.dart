@@ -7,7 +7,7 @@ import 'package:menu_servex/data/model/cart_items/cart_items.dart';
 import 'package:menu_servex/data/model/orderDetails/order_details.dart';
 import 'package:menu_servex/domain/entity/menu_items/items.dart';
 import 'package:menu_servex/domain/usecases/orders/confirm_orders_details.dart';
-import 'package:menu_servex/presentation/auth/widgets/custom_snackbar.dart';
+import 'package:menu_servex/common/custom_snackbar.dart';
 import 'package:menu_servex/presentation/cart/bloc/cartItems/cart_items_cubit.dart';
 import 'package:menu_servex/presentation/cart/widgets/cart_item_card.dart';
 import 'package:menu_servex/presentation/landing/landing_page.dart';
@@ -418,16 +418,20 @@ class CartPage extends StatelessWidget {
                       );
                     },
                     (r) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => AllOrdersScreen()),
-                      ).then(
-                        (value) => context.read<CartItemsCubit>().clearCartItems(),
-                      );
-                      context.showSnackBar(
+                      final cartCubit = context.read<CartItemsCubit>();
+
+                       context.showSnackBar(
                         message: r.toString(),
                         backgroundColor: Colors.green,
                       );
+                
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => AllOrdersScreen()),
+                      );
+                      
+                      cartCubit.clearCartItems();
+                     
                     },
                   );
                 },

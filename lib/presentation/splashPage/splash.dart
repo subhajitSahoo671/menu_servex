@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:menu_servex/core/configs/assets/app_images.dart';
 import 'package:menu_servex/presentation/auth/pages/auth_wrapper.dart';
+import 'package:menu_servex/presentation/auth/pages/sign_in.dart';
 import 'package:menu_servex/presentation/customer_details/pages/customer_details.dart';
 import 'package:menu_servex/presentation/landing/landing_page.dart';
 import 'package:menu_servex/presentation/scanner/scanner.dart';
+import 'package:menu_servex/presentation/waiter/signIn/sign_in.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -47,5 +49,6 @@ class _SplashPageState extends State<SplashPage> {
       await Future.delayed(Duration(seconds: 2));
       if (!mounted) return;
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => AuthWrapper() ,));
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => WaiterSignIn() ,));
   }
 }

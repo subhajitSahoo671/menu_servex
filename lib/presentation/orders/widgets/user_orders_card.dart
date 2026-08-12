@@ -202,7 +202,7 @@ class UserOrdersCard extends StatelessWidget {
                         ? Colors.teal
                         : orderDetails.orderStatus == "Preparing"
                         ? Colors.orange
-                        : orderDetails.orderStatus == "Completed"
+                        : orderDetails.orderStatus == "Ready"
                         ? Colors.green
                         : orderDetails.orderStatus == "Delivered"
                         ? Colors.grey
