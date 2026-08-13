@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:menu_servex/presentation/auth/pages/sign_up.dart';
 import 'package:menu_servex/presentation/auth/services/check_user.dart';
+import 'package:menu_servex/presentation/cook/dashBoard/pages/cook_dashboard.dart';
 import 'package:menu_servex/presentation/home/pages/home_page.dart';
 import 'package:menu_servex/presentation/landing/landing_page.dart';
 import 'package:menu_servex/presentation/splashPage/splash.dart';
@@ -40,6 +41,8 @@ class AuthWrapper extends StatelessWidget {
                   ? LandingPage()
                   : role == "waiter"
                       ? WaiterDashboard()
+                  : role == "cook"
+                      ? CookDashboard()
                       : SignUp();
             }
             return SignUp();

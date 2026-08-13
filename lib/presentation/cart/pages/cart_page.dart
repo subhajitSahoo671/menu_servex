@@ -12,6 +12,7 @@ import 'package:menu_servex/presentation/cart/bloc/cartItems/cart_items_cubit.da
 import 'package:menu_servex/presentation/cart/widgets/cart_item_card.dart';
 import 'package:menu_servex/presentation/landing/landing_page.dart';
 import 'package:menu_servex/presentation/orders/pages/all_orders.dart';
+import 'package:menu_servex/service_locator.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key, this.items});
@@ -400,7 +401,7 @@ class CartPage extends StatelessWidget {
               flex: 2,
               child: FilledButton(
                 onPressed: () async {
-                  var res = await ConfirmOrdersDetailsUsecase().call(
+                  var res = await sl<ConfirmOrdersDetailsUsecase>().call(
                     param: OrderDetailsModel(
                       userName: "dart",
                       orderTotal: totalAmount.toString(),
@@ -408,7 +409,7 @@ class CartPage extends StatelessWidget {
                       orderPaymentMethod: "COD",
                       orderItems: cartItems,
                     ),
-                  );
+                  ).timeout(const Duration(seconds: 20));
 
                   res.fold(
                     (l) {

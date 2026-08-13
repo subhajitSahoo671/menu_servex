@@ -11,15 +11,19 @@ class CheckUserService{
           final results = await Future.wait([
             FirebaseFirestore.instance.collection('waiter').doc(user.uid).get(),
             FirebaseFirestore.instance.collection('Users').doc(user.uid).get(),
+            FirebaseFirestore.instance.collection('cook').doc(user.uid).get(),
           ]);
 
           final waiterSnapshot = results[0];
           final customerSnapshot = results[1];
+          final cookSnapshot = results[2];
 
           if (waiterSnapshot.exists) {
             return 'waiter';
           } else if (customerSnapshot.exists) {
             return 'customer';
+          } else if (cookSnapshot.exists) {
+            return 'cook';
           } else {
             await FirebaseAuth.instance.signOut();
             // print("checkUserRoleError: User role not found in Firestore.");

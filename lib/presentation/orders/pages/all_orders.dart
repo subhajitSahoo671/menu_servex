@@ -7,6 +7,7 @@ import 'package:menu_servex/domain/entity/orders/order_details.dart';
 import 'package:menu_servex/domain/usecases/orders/get_user_orders.dart';
 import 'package:menu_servex/common/custom_snackbar.dart';
 import 'package:menu_servex/presentation/orders/widgets/user_orders_card.dart';
+import 'package:menu_servex/service_locator.dart';
 
 class AllOrdersScreen extends StatefulWidget {
   const AllOrdersScreen({super.key});
@@ -25,7 +26,7 @@ class _AllOrdersScreenState extends State<AllOrdersScreen> {
   }
 
   Future<void> _getUserOrders() async {
-    var res = await GetUserOrdersUsecase().call();
+    var res = await sl<GetUserOrdersUsecase>().call().timeout(const Duration(seconds: 20));
 
     if (!mounted) return;
 

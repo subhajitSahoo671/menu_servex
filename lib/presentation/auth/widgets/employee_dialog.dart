@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menu_servex/core/configs/theme/app_colors.dart';
+import 'package:menu_servex/presentation/cook/signIn/sign_in.dart';
 import 'package:menu_servex/presentation/waiter/signIn/sign_in.dart';
 
 
@@ -32,9 +33,28 @@ class EmployeeDialog extends StatelessWidget {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => WaiterSignIn(),));
                   },
                   child: Text("Waiter LogIn",style: TextStyle(fontSize: 18,fontWeight: .w400,color: AppColors.textSecondary),)),
-                SizedBox(height: 8,),
-                Text("Cook LogIn",style: TextStyle(fontSize: 18,fontWeight: .w400,color: AppColors.textSecondary),),
-                SizedBox(height: 8,),
+            SizedBox(
+              height: 10,
+              child: Divider(
+                  color: AppColors.gold.withAlpha(150),
+                  // height: 30,
+                  radius: BorderRadius.circular(30),
+                  thickness: 0.3,
+                ),
+            ),
+                InkWell(
+                  onTap: () => 
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => CookSignIn(),)),
+                  child: Text("Cook LogIn",style: TextStyle(fontSize: 18,fontWeight: .w400,color: AppColors.textSecondary),)),
+            SizedBox(
+              height: 10,
+              child: Divider(
+                  color: AppColors.gold.withAlpha(150),
+                  // height: 30,
+                  radius: BorderRadius.circular(30),
+                  thickness: 0.3,
+                ),
+            ),
                 Text("Manager LogIn",style: TextStyle(fontSize: 18,fontWeight: .w400,color: AppColors.textSecondary),),
               ],
             ),

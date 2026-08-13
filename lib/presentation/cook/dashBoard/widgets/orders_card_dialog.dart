@@ -10,12 +10,13 @@ import 'package:menu_servex/data/model/orderDetails/order_item.dart';
 import 'package:menu_servex/data/model/updateStatus/update_status.dart';
 import 'package:menu_servex/domain/entity/orders/order_details.dart';
 import 'package:menu_servex/domain/entity/orders/order_items.dart';
+import 'package:menu_servex/domain/usecases/cook/orders/update_status.dart';
 import 'package:menu_servex/domain/usecases/waiter/orders/update_status.dart';
 import 'package:menu_servex/service_locator.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
-class OrdersCardDialog extends StatelessWidget {
-  const OrdersCardDialog({super.key, required this.orderDetails});
+class CookOrdersCardDialog extends StatelessWidget {
+  const CookOrdersCardDialog({super.key, required this.orderDetails});
 
   final OrderDetailsEntity orderDetails;
 
@@ -216,96 +217,16 @@ class OrdersCardDialog extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text(
-                    "₹${orderDetails.orderTotal}",
-                    maxLines: 1,
-                    style: TextStyle(
-                      overflow: TextOverflow.ellipsis,
-                      fontSize: (screenWidth * 0.02).clamp(15, 18),
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.bg,
-                      // height: 1.2,
-                      // letterSpacing: 1
-                    ),
-                  ),
-                ],
-              ),
-              Divider(
-                color: AppColors.bg.withAlpha(150),
-                height: 30,
-                radius: BorderRadius.circular(30),
-                thickness: 0.3,
-              ),
-
-              // accept or reject
-              Row(
-                crossAxisAlignment: .center,
-                // mainAxisSize: .min,
-                mainAxisAlignment: .end,
-                children: [
-                  // reject button
-                  OutlinedButton(
-                    onPressed: () async {
-                      final messenger = ScaffoldMessenger.of(context);
-                      Navigator.pop(context);
-
-                      var res = await sl<UpdateStatusUsecase>().call(
-                        param: UpdateStatusModel(
-                          orderId: orderDetails.orderId!,
-                          userId: orderDetails.userId!,
-                          status: "Rejected",
-                        ),
-                      ).timeout(const Duration(seconds: 20));
-                      res.fold(
-                        (l) => messenger.showSnackBar(
-                          SnackBar(
-                            content: Text(l.toString(), style: const TextStyle(color: Colors.white)),
-                            backgroundColor: Colors.red,
-                            behavior: SnackBarBehavior.floating,
-                          ),
-                        ),
-                        (r) => messenger.showSnackBar(
-                          SnackBar(
-                            content: Text(r.toString(), style: const TextStyle(color: Colors.white)),
-                            backgroundColor: Colors.green,
-                            behavior: SnackBarBehavior.floating,
-                          ),
-                        ),
-                      );
-                    },
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24.0,
-                        vertical: 12,
-                      ),
-                      side: BorderSide(color: Colors.red, width: 1.5),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-
-                    child: Text(
-                      "Reject",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.2,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  // accept BUTTON
                   ElevatedButton(
                     onPressed: () async {
                       final messenger = ScaffoldMessenger.of(context);
                       Navigator.pop(context);
 
-                      var res = await sl<UpdateStatusUsecase>().call(
+                      var res = await sl<UpdateCookStatusUsecase>().call(
                         param: UpdateStatusModel(
                           orderId: orderDetails.orderId!,
                           userId: orderDetails.userId!,
-                          status: "Accepted",
+                          status: "Preparing",
                         ),
                       ).timeout(const Duration(seconds: 20));
                       res.fold(
@@ -327,8 +248,8 @@ class OrdersCardDialog extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 24.0,
-                        vertical: 12,
+                        horizontal: 18.0,
+                        vertical: 14,
                       ),
                       backgroundColor: AppColors.primaryOrange,
                       foregroundColor: AppColors.bg,
@@ -339,19 +260,140 @@ class OrdersCardDialog extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      "Accept",
+                      "Start Cooking",
                       style: TextStyle(
                         fontSize: 16,
                         color: AppColors.bg,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         letterSpacing: 0.2,
                       ),
                     ),
                   ),
 
-                  const SizedBox(height: 16),
                 ],
               ),
+              // Divider(
+              //   color: AppColors.bg.withAlpha(150),
+              //   height: 30,
+              //   radius: BorderRadius.circular(30),
+              //   thickness: 0.3,
+              // ),
+
+              // // accept or reject
+              // Row(
+              //   crossAxisAlignment: .center,
+              //   // mainAxisSize: .min,
+              //   mainAxisAlignment: .end,
+              //   children: [
+              //     // reject button
+              //     OutlinedButton(
+              //       onPressed: () async {
+              //         final messenger = ScaffoldMessenger.of(context);
+              //         Navigator.pop(context);
+
+              //         var res = await sl<UpdateStatusUsecase>().call(
+              //           param: UpdateStatusModel(
+              //             orderId: orderDetails.orderId!,
+              //             userId: orderDetails.userId!,
+              //             status: "Rejected",
+              //           ),
+              //         ).timeout(const Duration(seconds: 20));
+              //         res.fold(
+              //           (l) => messenger.showSnackBar(
+              //             SnackBar(
+              //               content: Text(l.toString(), style: const TextStyle(color: Colors.white)),
+              //               backgroundColor: Colors.red,
+              //               behavior: SnackBarBehavior.floating,
+              //             ),
+              //           ),
+              //           (r) => messenger.showSnackBar(
+              //             SnackBar(
+              //               content: Text(r.toString(), style: const TextStyle(color: Colors.white)),
+              //               backgroundColor: Colors.green,
+              //               behavior: SnackBarBehavior.floating,
+              //             ),
+              //           ),
+              //         );
+              //       },
+              //       style: OutlinedButton.styleFrom(
+              //         padding: const EdgeInsets.symmetric(
+              //           horizontal: 24.0,
+              //           vertical: 12,
+              //         ),
+              //         side: BorderSide(color: Colors.red, width: 1.5),
+              //         shape: RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.circular(12),
+              //         ),
+              //       ),
+
+              //       child: Text(
+              //         "Reject",
+              //         style: TextStyle(
+              //           color: Colors.red,
+              //           fontSize: 16,
+              //           fontWeight: FontWeight.w600,
+              //           letterSpacing: 0.2,
+              //         ),
+              //       ),
+              //     ),
+              //     SizedBox(width: 12),
+              //     // accept BUTTON
+              //     ElevatedButton(
+              //       onPressed: () async {
+              //         final messenger = ScaffoldMessenger.of(context);
+              //         Navigator.pop(context);
+
+              //         var res = await sl<UpdateStatusUsecase>().call(
+              //           param: UpdateStatusModel(
+              //             orderId: orderDetails.orderId!,
+              //             userId: orderDetails.userId!,
+              //             status: "Accepted",
+              //           ),
+              //         ).timeout(const Duration(seconds: 20));
+              //         res.fold(
+              //           (l) => messenger.showSnackBar(
+              //             SnackBar(
+              //               content: Text(l.toString(), style: const TextStyle(color: Colors.white)),
+              //               backgroundColor: Colors.red,
+              //               behavior: SnackBarBehavior.floating,
+              //             ),
+              //           ),
+              //           (r) => messenger.showSnackBar(
+              //             SnackBar(
+              //               content: Text(r.toString(), style: const TextStyle(color: Colors.white)),
+              //               backgroundColor: Colors.green,
+              //               behavior: SnackBarBehavior.floating,
+              //             ),
+              //           ),
+              //         );
+              //       },
+              //       style: ElevatedButton.styleFrom(
+              //         padding: const EdgeInsets.symmetric(
+              //           horizontal: 24.0,
+              //           vertical: 12,
+              //         ),
+              //         backgroundColor: AppColors.primaryOrange,
+              //         foregroundColor: AppColors.bg,
+              //         elevation: 6,
+              //         shadowColor: Colors.black54,
+              //         shape: RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.circular(12),
+              //         ),
+              //       ),
+              //       child: Text(
+              //         "Accept",
+              //         style: TextStyle(
+              //           fontSize: 16,
+              //           color: AppColors.bg,
+              //           fontWeight: FontWeight.w500,
+              //           letterSpacing: 0.2,
+              //         ),
+              //       ),
+              //     ),
+
+              //     const SizedBox(height: 16),
+              //   ],
+              // ),
             ],
           ),
         ),

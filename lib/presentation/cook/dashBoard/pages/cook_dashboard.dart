@@ -4,20 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:menu_servex/core/configs/theme/app_colors.dart';
 import 'package:menu_servex/data/model/orderDetails/order_details.dart';
 import 'package:menu_servex/domain/entity/orders/order_details.dart';
+import 'package:menu_servex/domain/usecases/cook/orders/get_orders.dart';
 import 'package:menu_servex/domain/usecases/waiter/orders/get_orders.dart';
 import 'package:menu_servex/common/custom_snackbar.dart';
 import 'package:menu_servex/presentation/auth/pages/sign_in.dart';
+import 'package:menu_servex/presentation/cook/dashBoard/widgets/orders_card.dart';
 import 'package:menu_servex/presentation/waiter/dashBoard/widgets/orders_card.dart';
 import 'package:menu_servex/service_locator.dart';
 
-class WaiterDashboard extends StatefulWidget {
-  const WaiterDashboard({super.key});
+class CookDashboard extends StatefulWidget {
+  const CookDashboard({super.key});
 
   @override
-  State<WaiterDashboard> createState() => _WaiterDashboardState();
+  State<CookDashboard> createState() => _CookDashboardState();
 }
 
-class _WaiterDashboardState extends State<WaiterDashboard> {
+class _CookDashboardState extends State<CookDashboard> {
 
   Stream<QuerySnapshot>? streamData;
 
@@ -28,7 +30,7 @@ class _WaiterDashboardState extends State<WaiterDashboard> {
   }
 
   Future<void> _getOrders() async {
-    var res = await sl<GetOrdersUsecase>().call().timeout(const Duration(seconds: 20));
+    var res = await sl<GetCookOrdersUsecase>().call().timeout(const Duration(seconds: 20));
 
     if (!mounted) return;
 
@@ -94,9 +96,9 @@ class _WaiterDashboardState extends State<WaiterDashboard> {
           var orderData = order.data() as Map<String, dynamic>;
           var orderDetailsModel = OrderDetailsModel.fromJson(orderData);
           OrderDetailsEntity orderDeatails = orderDetailsModel.toEntity();
-          if (orderDeatails.orderStatus == "Pending") {
+          if (orderDeatails.orderStatus == "Accepted") {
             newOrders.add(orderDeatails);
-          }else if(orderDeatails.orderStatus == "Preparing" || orderDeatails.orderStatus == "Accepted"){
+          }else if(orderDeatails.orderStatus == "Preparing"){
             preparingOrders.add(orderDeatails);
             
           }
@@ -156,7 +158,7 @@ class _WaiterDashboardState extends State<WaiterDashboard> {
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
                      print("orderDeatails $orders");
-        return OrdersCard(orderDetails: orders[index]);
+        return CookOrdersCard(orderDetails: orders[index]);
       },
     );
   }

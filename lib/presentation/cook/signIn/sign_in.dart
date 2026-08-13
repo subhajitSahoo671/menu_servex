@@ -5,18 +5,19 @@ import 'package:menu_servex/data/model/auth/sign_in.dart';
 import 'package:menu_servex/data/model/auth/sign_up.dart';
 import 'package:menu_servex/domain/usecases/auth/sign_in.dart';
 import 'package:menu_servex/domain/usecases/auth/sign_up.dart';
+import 'package:menu_servex/domain/usecases/cook/auth/sign_in.dart';
 import 'package:menu_servex/domain/usecases/waiter/auth/sign_in.dart';
 import 'package:menu_servex/presentation/auth/pages/sign_up.dart';
 import 'package:menu_servex/common/custom_snackbar.dart';
 import 'package:menu_servex/presentation/auth/widgets/custom_text_feild.dart';
-import 'package:menu_servex/presentation/cook/signIn/sign_in.dart';
 import 'package:menu_servex/presentation/home/pages/home_page.dart';
 import 'package:menu_servex/presentation/landing/landing_page.dart';
 import 'package:menu_servex/presentation/waiter/dashBoard/pages/waiter_dashboard.dart';
+import 'package:menu_servex/presentation/waiter/signIn/sign_in.dart';
 import 'package:menu_servex/service_locator.dart';
 
-class WaiterSignIn extends StatelessWidget {
-  WaiterSignIn({super.key});
+class CookSignIn extends StatelessWidget {
+  CookSignIn({super.key});
 
   // final String tableNum;
 
@@ -95,7 +96,7 @@ class WaiterSignIn extends StatelessWidget {
                          
                     RichText(
                       text: TextSpan(
-                        text: "Waiter ",
+                        text: "Cook ",
                         style: TextStyle(
                           color: AppColors.bg,
                           fontSize: 32,
@@ -117,7 +118,7 @@ class WaiterSignIn extends StatelessWidget {
                     ),
                     // SizedBox(height: 2,),
                      Text(
-                              "Sign in to manage orders and serve better",
+                              "Sign in to cook and manage your kitchen",
                               style: TextStyle(color: AppColors.bg,fontSize: 15),
                             ),
                     ],
@@ -127,7 +128,7 @@ class WaiterSignIn extends StatelessWidget {
                     SizedBox(height: 60),
                     _signInButton(context),
                     SizedBox(height: 70,),
-                  _iAmACook(context),
+                  _iAmAWaiter(context),
                   ],
                 ),
               ),
@@ -183,7 +184,7 @@ class WaiterSignIn extends StatelessWidget {
      Color primaryColor = Color(0xFFC46A14);
     return GestureDetector(
       onTap: () async{
-        var res = await sl<WaiterSignInUsecase>().call(param: SignInModel(email: _emailController.text.trim(), password: _passwordController.text.trim())).timeout(const Duration(seconds: 20));
+        var res = await sl<CookSignInUsecase>().call(param: SignInModel(email: _emailController.text.trim(), password: _passwordController.text.trim())).timeout(const Duration(seconds: 20));
      
      res.fold((l) {
               context.showSnackBar(message: l.toString(), backgroundColor: Colors.red);
@@ -224,7 +225,7 @@ class WaiterSignIn extends StatelessWidget {
     );
   }
 
-  Widget _iAmACook(BuildContext context){
+  Widget _iAmAWaiter(BuildContext context){
     //  Color primaryColor = Color(0xFFC46A14);
   Color gold = Color(0xFFC58A2B);
 
@@ -236,10 +237,10 @@ class WaiterSignIn extends StatelessWidget {
           child: OutlinedButton.icon(
             
             onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CookSignIn(),));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => WaiterSignIn(),));
             },
             icon:  Icon(
-                Icons.soup_kitchen,
+                Icons.person_2_outlined,
                 color: gold,
                 size: 26,
               ),
@@ -256,7 +257,7 @@ class WaiterSignIn extends StatelessWidget {
             ),
             
              label:  Text(
-              "I'm a Cook",
+              "I'm a Waiter",
               style: TextStyle(
                 color: gold,
                 fontSize: 18,

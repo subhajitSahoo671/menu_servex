@@ -12,6 +12,7 @@ import 'package:menu_servex/presentation/auth/widgets/employee_dialog.dart';
 import 'package:menu_servex/presentation/home/pages/home_page.dart';
 import 'package:menu_servex/presentation/landing/landing_page.dart';
 import 'package:menu_servex/presentation/waiter/signIn/sign_in.dart';
+import 'package:menu_servex/service_locator.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -41,126 +42,135 @@ class _SignInState extends State<SignIn> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: Color(0xffF5F3E4),
-              image: DecorationImage(
-                image: AssetImage(AppImages.authBG),
-                fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () => {
+              if(isEmployeeDialogOpen){
+                  setState(() {
+                    isEmployeeDialogOpen = false;
+                  })
+              }
+            },
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: Color(0xffF5F3E4),
+                image: DecorationImage(
+                  image: AssetImage(AppImages.authBG),
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(30),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(height: 70),
-                   Column(
-                    // mainAxisAlignment: .spaceBetween,
+              child: Padding(
+                padding: const EdgeInsets.all(30),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                  
-                      Hero(
-                      tag: 1,
-                      child: Image.asset(
-                        AppImages.logo,
-                        height: 100,
-                        width: 100,
-                        color: Color.fromARGB(255, 189, 129, 32),
-                      ),
-                    ),
-          
-                     SizedBox(
-                      height: 50,
-                      width: double.infinity,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              color: AppColors.gold,
-                              thickness: 2,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Text(
-                              "GOOD FOOD, GREATE EXPERINCE",
-                              style: TextStyle(color: AppColors.bg,fontSize: 12),
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              color: AppColors.gold,
-                              thickness: 2,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                         
-                    RichText(
-                      text: TextSpan(
-                        text: "Welcome ",
-                        style: TextStyle(
-                          color: AppColors.gold,
-                          fontSize: 35,
-                          fontWeight: FontWeight.w600,
-                          fontStyle: .italic
-                        ),
-                        children: [
-                          TextSpan(
-                        text: " Back !",
-                        style: TextStyle(
-                          color: AppColors.bg,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: .normal 
-                        ),)
-                        ]
-                      ),
-                    ),
-                    ],
-                   ),
-                    SizedBox(height: 30),
-                    _customerDetails(),
-                    SizedBox(height: 50),
-                    _signInButton(context),
-                    SizedBox(height: 100,),
-                     Row(
-                      mainAxisAlignment: .center,
+                      SizedBox(height: 70),
+                     Column(
+                      // mainAxisAlignment: .spaceBetween,
                       children: [
-                     
-                       Text(
-                        "Don't have an account? ",
-                        style: TextStyle(
-                           color: AppColors.bg,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
+                    
+                        Hero(
+                        tag: 1,
+                        child: Image.asset(
+                          AppImages.logo,
+                          height: 100,
+                          width: 100,
+                          color: Color.fromARGB(255, 189, 129, 32),
+                        ),
+                      ),
+            
+                       SizedBox(
+                        height: 50,
+                        width: double.infinity,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Divider(
+                                color: AppColors.gold,
+                                thickness: 2,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              child: Text(
+                                "GOOD FOOD, GREATE EXPERINCE",
+                                style: TextStyle(color: AppColors.bg,fontSize: 12),
+                              ),
+                            ),
+                            Expanded(
+                              child: Divider(
+                                color: AppColors.gold,
+                                thickness: 2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                           
+                      RichText(
+                        text: TextSpan(
+                          text: "Welcome ",
+                          style: TextStyle(
+                            color: AppColors.gold,
+                            fontSize: 35,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: .italic
+                          ),
+                          children: [
+                            TextSpan(
+                          text: " Back !",
+                          style: TextStyle(
+                            color: AppColors.bg,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            fontStyle: .normal 
+                          ),)
+                          ]
+                        ),
+                      ),
+                      ],
+                     ),
+                      SizedBox(height: 30),
+                      _customerDetails(),
+                      SizedBox(height: 50),
+                      _signInButton(context),
+                      SizedBox(height: 100,),
+                       Row(
+                        mainAxisAlignment: .center,
+                        children: [
+                       
+                         Text(
+                          "Don't have an account? ",
+                          style: TextStyle(
+                             color: AppColors.bg,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          
                         ),
                         
-                      ),
                       
-                    
-                     GestureDetector(
-                      onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => SignUp()),
-                          );
-                        },
-                       child: Text(
-                           "Sign Up",
-                          style: TextStyle(
-                            color: AppColors.primaryOrange,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                          ),),
-                     ),
-                      ],
-                     )
-                  ],
+                       GestureDetector(
+                        onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => SignUp()),
+                            );
+                          },
+                         child: Text(
+                             "Sign Up",
+                            style: TextStyle(
+                              color: AppColors.primaryOrange,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),),
+                       ),
+                        ],
+                       )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -253,7 +263,7 @@ class _SignInState extends State<SignIn> {
     //  Color AppColors.primaryOrange = Color(0xFFC46A14);
     return GestureDetector(
       onTap: () async{
-        var res = await SignInUsecase().call(param: SignInModel(email: _emailController.text.trim(), password: _passwordController.text.trim()));
+        var res = await sl<SignInUsecase>().call(param: SignInModel(email: _emailController.text.trim(), password: _passwordController.text.trim()));
      
      res.fold((l) {
               context.showSnackBar(message: l.toString(), backgroundColor: Colors.red);

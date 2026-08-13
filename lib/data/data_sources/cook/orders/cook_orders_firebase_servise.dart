@@ -5,13 +5,13 @@ import 'package:menu_servex/data/model/updateStatus/update_status.dart';
 // import 'package:menu_servex/data/model/orderDetails/order_details.dart';
 // import 'package:random_string/random_string.dart';
 
-abstract class WaiterOrdersFirebaseServise {
+abstract class CookOrdersFirebaseServise {
   // Future<Either> confirmOrderDetails(OrderDetailsModel orderDetails);
   Future<Either> getOrders();
   Future<Either> updateStatus(UpdateStatusModel status);
 }
 
-class WaiterOrdersFirebaseServiseImpl extends WaiterOrdersFirebaseServise {
+class CookOrdersFirebaseServiseImpl extends CookOrdersFirebaseServise {
   @override
   Future<Either> getOrders() async{
    try {
