@@ -28,6 +28,8 @@ ItemsModel.fromJson(Map<String,dynamic> data){
     // variationName = data["variation name"];
     variations = data["variation"];
   }
+
+  
 }
 
 extension ItemsModelX on ItemsModel {

@@ -129,11 +129,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 appBar: PreferredSize(
                   preferredSize: Size.fromHeight(kToolbarHeight),
-                  child: BlocBuilder<CartItemsCubit,List<CartItemsModel>>(
-                    builder: (context,cartItemsList) {
-                      return BasicAppBar(cartItems:cartItemsList);
-                    }
-                  ),
+                  child: BasicAppBar()
                 ),
                 body: CustomScrollView(
                   controller: scrollController,

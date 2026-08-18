@@ -10,6 +10,7 @@ import 'package:menu_servex/domain/usecases/waiter/auth/sign_in.dart';
 import 'package:menu_servex/presentation/auth/pages/sign_up.dart';
 import 'package:menu_servex/common/custom_snackbar.dart';
 import 'package:menu_servex/presentation/auth/widgets/custom_text_feild.dart';
+import 'package:menu_servex/presentation/cook/dashBoard/pages/cook_dashboard.dart';
 import 'package:menu_servex/presentation/home/pages/home_page.dart';
 import 'package:menu_servex/presentation/landing/landing_page.dart';
 import 'package:menu_servex/presentation/waiter/dashBoard/pages/waiter_dashboard.dart';
@@ -194,7 +195,7 @@ class CookSignIn extends StatelessWidget {
       
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => WaiterDashboard()),
+          MaterialPageRoute(builder: (context) => CookDashboard()),
         );
                 context.showSnackBar(message: r.toString(), backgroundColor: Colors.green);
 

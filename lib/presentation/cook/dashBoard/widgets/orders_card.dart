@@ -60,74 +60,85 @@ class CookOrdersCard extends StatelessWidget {
     return Center(
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: 700),
-        child: Card(
-          margin: EdgeInsets.only(top: 16),
-          borderOnForeground: true,
-           color: Colors.grey.shade900,
-           elevation: 3,
-            clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-           borderRadius: BorderRadius.circular(20),
-           side: BorderSide( color: Colors.grey.shade800,
-            width: 1.5)
-          ), 
-          child: Container(
-            padding: .all(16),
-            child: Row(
-              mainAxisAlignment: .spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: .start,
-                  children: [
-                    Text("Table ${orderDetails.tableNum}",style: TextStyle(fontSize: 18,fontWeight: .w600,color: AppColors.bg),),
-                    SizedBox(height: 2,),
-                    Text("${orderDetails.orderItems!.length} orders",style: TextStyle(fontSize: 16,fontWeight: .w400,color: AppColors.bg),),
-                  ],
-                ),
-        
-                orderDetails.orderStatus != "Accepted" 
-               ? Center(child: Text("${orderDetails.orderStatus}",style: TextStyle(color:  orderDetails.orderStatus == "Pending"
-                        ? Colors.deepOrange
-                        : orderDetails.orderStatus == "Accepted"
-                        ? Colors.teal
-                        : orderDetails.orderStatus == "Preparing"
-                        ? Colors.orange
-                        : orderDetails.orderStatus == "Ready"
-                        ? Colors.green
-                        : orderDetails.orderStatus == "Delivered"
-                        ? Colors.grey
-                        : Colors.red,)))
-
-                 //view buton
-              : OutlinedButton(
-                
-                onPressed: () {
-                  _showOrderDetailsDialog(context);
-                },
-               
-                
-                style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-                  side: BorderSide(
-                    color: AppColors.gold,
-                    width: 1.5,
+        child: InkWell(
+          hoverColor: Colors.transparent,
+          focusColor: Colors.transparent,
+          overlayColor: .all(Colors.transparent),
+          splashColor: Colors.transparent,
+          onTap: () {
+            if (orderDetails.orderStatus == "Preparing") {
+              _showOrderDetailsDialog(context);
+            }
+          },
+          child: Card(
+            margin: EdgeInsets.only(top: 16),
+            borderOnForeground: true,
+             color: Colors.grey.shade900,
+             elevation: 3,
+              clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+             borderRadius: BorderRadius.circular(20),
+             side: BorderSide( color: Colors.grey.shade800,
+              width: 1.5)
+            ), 
+            child: Container(
+              padding: .all(16),
+              child: Row(
+                mainAxisAlignment: .spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: .start,
+                    children: [
+                      Text("Table ${orderDetails.tableNum}",style: TextStyle(fontSize: 18,fontWeight: .w600,color: AppColors.bg),),
+                      SizedBox(height: 2,),
+                      Text("${orderDetails.orderItems!.length} orders",style: TextStyle(fontSize: 16,fontWeight: .w400,color: AppColors.bg),),
+                    ],
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+          
+                  orderDetails.orderStatus != "Accepted" 
+                 ? Center(child: Text("${orderDetails.orderStatus}",style: TextStyle(color:  orderDetails.orderStatus == "Pending"
+                          ? Colors.deepOrange
+                          : orderDetails.orderStatus == "Accepted"
+                          ? Colors.teal
+                          : orderDetails.orderStatus == "Preparing"
+                          ? Colors.orange
+                          : orderDetails.orderStatus == "Ready"
+                          ? Colors.green
+                          : orderDetails.orderStatus == "Delivered"
+                          ? Colors.grey
+                          : Colors.red,)))
+          
+                   //view buton
+                : OutlinedButton(
+                  
+                  onPressed: () {
+                    _showOrderDetailsDialog(context);
+                  },
+                 
+                  
+                  style: OutlinedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                    side: BorderSide(
+                      color: AppColors.gold,
+                      width: 1.5,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
-                ),
-                
-                 child:  Text(
-                  "View",
-                  style: TextStyle(
-                    color: AppColors.gold,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    // letterSpacing: 0.5,
+                  
+                   child:  Text(
+                    "View",
+                    style: TextStyle(
+                      color: AppColors.gold,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      // letterSpacing: 0.5,
+                    ),
                   ),
-                ),
-              ) 
-              ],
+                ) 
+                ],
+              ),
             ),
           ),
         ),

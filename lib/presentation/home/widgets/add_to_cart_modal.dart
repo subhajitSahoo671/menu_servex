@@ -3,17 +3,19 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_servex/core/configs/assets/app_images.dart';
+import 'package:menu_servex/core/configs/constants.dart';
 import 'package:menu_servex/core/configs/theme/app_colors.dart';
 import 'package:menu_servex/data/model/cart_items/cart_items.dart';
 import 'package:menu_servex/domain/entity/menu_items/items.dart';
 import 'package:menu_servex/presentation/cart/bloc/cartItems/cart_items_cubit.dart';
 import 'package:menu_servex/presentation/cart/pages/cart_page.dart';
+import 'package:menu_servex/presentation/favorite/bloc/favorite_items_cubit.dart';
 import 'package:svg_flutter/svg.dart';
 
 class Addtocartmodal extends StatefulWidget {
-  final ItemsEntity items;
+  final ItemsEntity item;
 
-  const Addtocartmodal({super.key, required this.items});
+  const Addtocartmodal({super.key, required this.item});
 
   @override
   State<Addtocartmodal> createState() => _AddtocartmodalState();
@@ -26,13 +28,13 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
   @override
   void initState() {
     super.initState();
-    _selectedValue = widget.items.sortedVariations.keys.elementAt(0);
+    _selectedValue = widget.item.sortedVariations.keys.elementAt(0);
   }
 
   @override
   Widget build(BuildContext context) {
     int totalAmount =
-        widget.items.sortedVariations[_selectedValue]! * itemCount;
+        widget.item.sortedVariations[_selectedValue]! * itemCount;
 
     return Container(
       padding: .all(12),
@@ -87,7 +89,7 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image(
-                        image: NetworkImage(widget.items.image),
+                        image: NetworkImage(widget.item.image),
                         fit: BoxFit.cover,
                         // width: 350,
                         // height: 300,
@@ -121,7 +123,7 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                               crossAxisAlignment: .center,
                               children: [
                                 SvgPicture.asset(
-                                  widget.items.diet == "veg"
+                                  widget.item.diet == "veg"
                                       ? AppImages.vegIcon
                                       : AppImages.nonVegIcon,
                                   height: 18,
@@ -129,7 +131,7 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                                 ),
                                 SizedBox(width: 4),
                                 Text(
-                                  widget.items.diet,
+                                  widget.item.diet,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: .w400,
@@ -141,7 +143,7 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                             SizedBox(height: 8),
                             //title
                             Text(
-                              widget.items.item,
+                              widget.item.item,
                               maxLines: 2,
                               style: TextStyle(
                                 overflow: TextOverflow.ellipsis,
@@ -155,8 +157,21 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                         ),
                       ),
                       SizedBox(width: 8),
-                      //itemCount
-                      Row(
+                     TableNum.tableNum == "No Table"
+                     // favorite button
+                     ? BlocBuilder<FavoriteItemsCubit,List<ItemsEntity>>(
+                       builder: (context,favItemsList) {
+                         return IconButton.filled(onPressed: () {
+                           if (favItemsList.contains(widget.item)) {
+                             context.read<FavoriteItemsCubit>().removeFavoriteItem(widget.item);
+                           } else {
+                             context.read<FavoriteItemsCubit>().addFavoriteItem(widget.item);
+                           }
+                         }, icon: Icon(favItemsList.contains(widget.item) ? Icons.favorite : Icons.favorite_border));
+                       }
+                     )
+                     //itemCount
+                     : Row(
                         children: [
                           IconButton.filledTonal(
                             onPressed: () {
@@ -207,7 +222,7 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                         color: Colors.white,
                       ),
                       child: Text(
-                        widget.items.description,
+                        widget.item.description,
                         style: TextStyle(
                           // overflow: TextOverflow.ellipsis,
                           fontSize: 14,
@@ -241,16 +256,42 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                           ListView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
-                            itemCount: widget.items.sortedVariations.length,
+                            itemCount: widget.item.sortedVariations.length,
                             itemBuilder: (BuildContext context, int index) {
                               var variationName = widget
-                                  .items
+                                  .item
                                   .sortedVariations
                                   .keys
                                   .elementAt(index);
                               return Material(
                                 color: Colors.transparent,
-                                child: RadioListTile<String>(
+                                child: TableNum.tableNum == "No Table" 
+                                ?  Row(
+                                    mainAxisAlignment: .spaceBetween,
+                                    crossAxisAlignment: .center,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          variationName,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: .w400,
+                                            color: AppColors.textSecondary,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        "₹${widget.item.sortedVariations[variationName]}",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: .w400,
+                                          color: AppColors.textSecondary,
+                                        ),
+                                      ),
+                                    ],
+                                  
+                                )
+                                :  RadioListTile<String>(
                                   title: Row(
                                     mainAxisAlignment: .spaceBetween,
                                     crossAxisAlignment: .center,
@@ -272,7 +313,7 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                                         ),
                                       ),
                                       Text(
-                                        "₹${widget.items.sortedVariations[variationName]}",
+                                        "₹${widget.item.sortedVariations[variationName]}",
                                         style: TextStyle(
                                           fontSize: 15,
                                           fontWeight:
@@ -304,14 +345,16 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 120),
+                    TableNum.tableNum == "No Table"
+                    ? SizedBox(height: 32)
+                    : SizedBox(height: 120),
                   ],
                 ),
               ),
             ],
           ),
 
-          Positioned(
+       if(TableNum.tableNum != "No Table") Positioned(
             bottom: 0,
             right: 0,
             left: 0,
@@ -358,12 +401,12 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                       child: BlocBuilder<CartItemsCubit, List<CartItemsModel>>(
                         builder: (context, cartItemsList) {
                           CartItemsModel cartItem = CartItemsModel(
-                                item: widget.items.item,
-                                image: widget.items.image,
-                                diet: widget.items.diet,
+                                item: widget.item.item,
+                                image: widget.item.image,
+                                diet: widget.item.diet,
                                 quantity: itemCount,
                                 variation: _selectedValue!,
-                                price: widget.items.sortedVariations[_selectedValue]!,
+                                price: widget.item.sortedVariations[_selectedValue]!,
                               );
                           return FilledButton(
                             onPressed: () {
@@ -372,7 +415,7 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (BuildContext context) {
-                                      return CartPage(items: widget.items);
+                                      return CartPage(items: widget.item);
                                     },
                                   ),
                                 );

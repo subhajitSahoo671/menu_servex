@@ -68,7 +68,7 @@ class _CookDashboardState extends State<CookDashboard> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
-        title: Text("Waiter DashBoard",style: TextStyle(fontSize: 24,fontWeight: .w600,color: AppColors.bg),),
+        title: Text("Cook DashBoard",style: TextStyle(fontSize: 24,fontWeight: .w600,color: AppColors.bg),),
         actions: [
           IconButton(icon: Icon(Icons.logout), onPressed: () { signedOut(); },)
         ],

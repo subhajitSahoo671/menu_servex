@@ -34,7 +34,7 @@ class ItemCard extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (BuildContext context) {
-        return  Addtocartmodal(items:items); },
+        return  Addtocartmodal(item:items); },
     );
   }
 

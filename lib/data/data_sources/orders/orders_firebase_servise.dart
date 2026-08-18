@@ -35,7 +35,9 @@ class OrdersFirebaseServiseImpl extends OrdersFirebaseServise {
       String orderId = randomAlphaNumeric(10);
 
       if (user != null) {
-        final orderData = orderDetails.toJson()
+
+        if (orderDetails.tableNum != "No Table" || orderDetails.tableNum != null) {
+          final orderData = orderDetails.toJson()
           ..['orderId'] = orderId
           // ..['orderStatus'] = 'Pending'
           ..['userId'] = orderDetails.userId ?? user.uid;
@@ -52,6 +54,11 @@ class OrdersFirebaseServiseImpl extends OrdersFirebaseServise {
           // add global user order details in order collection
           FirebaseFirestore.instance.collection("orders").doc(orderId).set(orderData),
         ]);
+        }else{
+          print("table number Not Found");
+          return left("Table Number required");
+        }
+
       } else {
         print("user Not Found");
       }

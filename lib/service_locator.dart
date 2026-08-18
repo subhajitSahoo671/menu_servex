@@ -30,6 +30,7 @@ import 'package:menu_servex/domain/usecases/cook/orders/update_status.dart';
 import 'package:menu_servex/domain/usecases/menu/get_menu_categories.dart';
 import 'package:menu_servex/domain/usecases/menu/get_menu_items.dart';
 import 'package:menu_servex/domain/usecases/orders/confirm_orders_details.dart';
+import 'package:menu_servex/domain/usecases/orders/get_user_orders.dart';
 import 'package:menu_servex/domain/usecases/waiter/auth/sign_in.dart';
 import 'package:menu_servex/domain/usecases/waiter/orders/get_orders.dart';
 import 'package:menu_servex/domain/usecases/waiter/orders/update_status.dart';
@@ -72,6 +73,8 @@ Future<void> initializeDependencies() async{
     sl.registerSingleton<SignInUsecase>(SignInUsecase());
 
     sl.registerSingleton<SignUpUsecase>(SignUpUsecase());
+
+    sl.registerSingleton<GetUserOrdersUsecase>(GetUserOrdersUsecase());
 
     sl.registerSingleton<ConfirmOrdersDetailsUsecase>(ConfirmOrdersDetailsUsecase());
 

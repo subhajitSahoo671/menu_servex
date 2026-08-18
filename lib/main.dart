@@ -1,11 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:menu_servex/firebase_options.dart';
 import 'package:menu_servex/presentation/auth/pages/auth_wrapper.dart';
 import 'package:menu_servex/presentation/cart/bloc/cartItems/cart_items_cubit.dart';
+import 'package:menu_servex/presentation/favorite/bloc/favorite_items_cubit.dart';
 import 'package:menu_servex/presentation/splashPage/splash.dart';
 import 'package:menu_servex/service_locator.dart';
+import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async{
 
@@ -16,6 +20,15 @@ Future<void> main() async{
   );
 
   await initializeDependencies();
+
+   // Initialize native storage directory
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorageDirectory.web
+        :  HydratedStorageDirectory(
+            (await getTemporaryDirectory()).path,
+          ),
+  );
   
   runApp(const MyApp());
 }
@@ -26,8 +39,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  BlocProvider<CartItemsCubit>(
-      create: (context) =>  CartItemsCubit()..getCartItemsList(),
+    return  MultiBlocProvider(providers: [
+       BlocProvider<CartItemsCubit>(create: (context) =>  CartItemsCubit()..getCartItemsList(),),
+       BlocProvider<FavoriteItemsCubit>(create: (context) =>  FavoriteItemsCubit(),),
+    ],
       child: MaterialApp(
         title: 'ServeX',
         debugShowCheckedModeBanner: false,
@@ -36,6 +51,7 @@ class MyApp extends StatelessWidget {
         ),
         home: const AuthWrapper(),
       ),
+    
     );
   }
 }

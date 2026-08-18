@@ -4,7 +4,7 @@ extension SnackbarExtension on BuildContext {
   void showSnackBar({
     required String message,
     Color backgroundColor = Colors.black,
-    Duration duration = const Duration(seconds: 3),
+    Duration duration = const Duration(seconds: 2),
   }) {
     // Clear any existing snackbars before showing a new one
     ScaffoldMessenger.of(this).clearSnackBars();

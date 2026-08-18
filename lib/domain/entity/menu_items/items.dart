@@ -1,6 +1,8 @@
 import 'dart:collection';
 
-class ItemsEntity {
+import 'package:equatable/equatable.dart';
+
+class ItemsEntity extends Equatable {
   final String item;
   final String description;
   final String image;
@@ -25,4 +27,18 @@ class ItemsEntity {
   (a, b) => variations[a]!.compareTo(variations[b]!)
 );
   }
+
+   // Convert User Object to Map (JSON)
+  Map<String, dynamic> toJson() {
+    return {
+      'item': item,
+      'description': description,
+      'image': image,
+      'diet': diet,
+      'variations': sortedVariations,
+    };
+  }
+
+  @override
+  List<Object?> get props => [item, description, diet,];
 }

@@ -65,7 +65,7 @@ class UserOrdersCard extends StatelessWidget {
             ListView.separated(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: orderItems!.length,
+              itemCount: orderItems!.length <= 4 ? orderItems.length : 4,
               separatorBuilder: (BuildContext context, int index) {
                 return SizedBox(height: 10);
               },
@@ -125,6 +125,18 @@ class UserOrdersCard extends StatelessWidget {
                 );
               },
             ),
+            if (orderItems.length > 4)
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  "+${orderItems.length - 4} more items",
+                  style: TextStyle(
+                    fontSize: (screenWidth * 0.02).clamp(14, 18),
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ),
             Divider(
               color: AppColors.primary,
               height: 30,
