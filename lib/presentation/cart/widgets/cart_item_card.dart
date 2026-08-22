@@ -39,21 +39,24 @@ class CartItemCard extends StatelessWidget {
              children: [
                //image
                 Expanded(
-                  flex: 2,
-                  child: ClipRRect(
-                    borderRadius: BorderRadiusGeometry.circular(20),
-                    child: Container(
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20)
-                      ),
-                      child: Image(image: NetworkImage(cartItem.image),fit: .cover,)),
+                  flex: 3,
+                  child: Padding(
+                  padding: const .symmetric(vertical: 4),
+                    child: ClipRRect(
+                      borderRadius: BorderRadiusGeometry.circular(20),
+                      child: Container(
+                        height: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20)
+                        ),
+                        child: Image(image: NetworkImage(cartItem.image),fit: .cover,)),
+                    ),
                   ),
                 ),
                 SizedBox(width: (screenWidth*0.03).clamp(12, 25),),
               //details
               Expanded(
-                flex: 5,
+                flex: 6,
                 child: Stack(
                   children: [
                     Column(

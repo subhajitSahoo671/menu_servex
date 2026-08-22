@@ -403,7 +403,7 @@ class _CookOrdersCardDialogState extends State<CookOrdersCardDialog> {
                         ElevatedButton(
                           onPressed: () async {
                             final messenger = ScaffoldMessenger.of(context);
-                             if(widget.status == "Preparing" ) Navigator.pop(context);
+                             if(widget.status == "Preparing" || widget.orderDetails.orderStatus == "Preparing") Navigator.pop(context);
           
                             var res = await sl<UpdateCookStatusUsecase>()
                                 .call(

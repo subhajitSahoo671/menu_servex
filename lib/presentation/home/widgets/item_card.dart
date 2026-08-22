@@ -64,7 +64,7 @@ class ItemCard extends StatelessWidget {
                   image: NetworkImage(items.image),
                   fit: BoxFit.cover,
                   width: (screenWidth*0.2).clamp(190, 210),
-                  height: (screenWidth*0.14).clamp(120, 190),
+                  height: (screenWidth*0.14).clamp(125, 190),
                 ),
               ),
               Container(

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:menu_servex/core/configs/assets/app_images.dart';
 import 'package:menu_servex/core/configs/constants.dart';
 import 'package:menu_servex/core/configs/theme/app_colors.dart';
+import 'package:menu_servex/data/data_sources/menu/menu_firebase_servise.dart';
 import 'package:menu_servex/data/model/cart_items/cart_items.dart';
 import 'package:menu_servex/domain/entity/menu_items/items.dart';
 import 'package:menu_servex/presentation/cart/bloc/cartItems/cart_items_cubit.dart';
@@ -11,6 +12,7 @@ import 'package:menu_servex/presentation/cart/pages/cart_page.dart';
 import 'package:menu_servex/presentation/favorite/bloc/favorite_items_cubit.dart';
 import 'package:menu_servex/presentation/favorite/page/favorite_page.dart';
 import 'package:menu_servex/presentation/home/widgets/profile_dialog_box.dart';
+import 'package:menu_servex/service_locator.dart';
 // import 'package:menu_servex/presentation/home/widgets/side_bar.dart';
 
 
@@ -55,7 +57,9 @@ class BasicAppBar extends StatelessWidget implements PreferredSizeWidget {
           Container(
             margin: .symmetric(horizontal: 0,vertical: 8),
             child: IconButton.filled(
-              onPressed: () {},
+              onPressed: () async{
+                // await sl<MenuFirebaseServise>().putMenuItems();
+              },
               icon: Icon(Icons.search_rounded),
               color: Colors.white,
             ),

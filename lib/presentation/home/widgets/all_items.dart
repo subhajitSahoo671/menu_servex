@@ -155,9 +155,9 @@ class AllItemsState extends State<AllItems> {
                                   childAspectRatio: 350/200
                                 ),
                             // itemCount: items.length,
-                            itemCount: 8,
+                            itemCount: items.length,
                             itemBuilder: (BuildContext context, int i) {
-                              return ItemCard(items: items[0]);
+                              return ItemCard(items: items[i]);
                             },
                           );
                         }

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_servex/core/configs/constants.dart';
+import 'package:menu_servex/core/configs/theme/app_colors.dart';
 import 'package:menu_servex/data/model/orderDetails/order_details.dart';
 import 'package:menu_servex/domain/entity/orders/order_details.dart';
 import 'package:menu_servex/domain/usecases/orders/get_user_orders.dart';
@@ -83,7 +84,14 @@ class _AllOrdersScreenState extends State<AllOrdersScreen> {
         
             if (snapshot.hasData) {
         var allOrders = snapshot.data!.docs;
-        return SingleChildScrollView(
+        return allOrders.isEmpty
+                ? Center(
+                    child: Text(
+                          "No orders found",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                  )
+                  : SingleChildScrollView(
           child: Column(
             children: [
                 SizedBox(height: (screenWidth * 0.02).clamp(8, 16)),

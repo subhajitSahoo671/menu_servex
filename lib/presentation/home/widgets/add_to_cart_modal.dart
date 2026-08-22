@@ -214,6 +214,7 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                   children: [
                     //description
                     Container(
+                      width: MediaQuery.widthOf(context),
                       padding: .only(left: 12, right: 12, top: 4, bottom: 24),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.vertical(
@@ -266,30 +267,33 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                               return Material(
                                 color: Colors.transparent,
                                 child: TableNum.tableNum == "No Table" 
-                                ?  Row(
-                                    mainAxisAlignment: .spaceBetween,
-                                    crossAxisAlignment: .center,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          variationName,
+                                ?  Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                      mainAxisAlignment: .spaceBetween,
+                                      crossAxisAlignment: .center,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            variationName,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: .w400,
+                                              color: AppColors.textSecondary,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          "₹${widget.item.sortedVariations[variationName]}",
                                           style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 15,
                                             fontWeight: .w400,
                                             color: AppColors.textSecondary,
                                           ),
                                         ),
-                                      ),
-                                      Text(
-                                        "₹${widget.item.sortedVariations[variationName]}",
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: .w400,
-                                          color: AppColors.textSecondary,
-                                        ),
-                                      ),
-                                    ],
-                                  
+                                      ],
+                                    
+                                  ),
                                 )
                                 :  RadioListTile<String>(
                                   title: Row(
@@ -426,6 +430,11 @@ class _AddtocartmodalState extends State<Addtocartmodal> {
                                 // setState(() {
                                   
                                 // });
+                              }
+                              if (TableNum.tableNum != "No Table") {
+                                if(context.read<FavoriteItemsCubit>().state.contains(widget.item)){
+                                  context.read<FavoriteItemsCubit>().removeFavoriteItem(widget.item);
+                                }
                               }
                             },
                             child: Container(

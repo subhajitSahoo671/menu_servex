@@ -9,21 +9,24 @@ import 'package:menu_servex/domain/entity/menu_categories/categories.dart';
 import 'package:menu_servex/domain/entity/menu_items/items.dart';
 
 abstract class MenuFirebaseServise {
-    Future<Either> getMenuCategories();
-    Future<Either> getMenuItems();
+  Future<Either> getMenuCategories();
+  Future<Either> getMenuItems();
+  // Future<void> putMenuItems();
 }
 
-class MenuFirebaseServiseImpl extends MenuFirebaseServise{
+class MenuFirebaseServiseImpl extends MenuFirebaseServise {
   @override
   Future<Either> getMenuCategories() async {
     try {
       List<CategoriesEntity> categories = [];
 
-      var data = await FirebaseFirestore.instance.collection("Menu-catagories").get();
-    // log("hy:${data.docs.length}");
-    var docs = data.docs;
-    // docs.sort();
-      for(var doc in docs){
+      var data = await FirebaseFirestore.instance
+          .collection("Menu-catagories")
+          .get();
+      // log("hy:${data.docs.length}");
+      var docs = data.docs;
+      // docs.sort();
+      for (var doc in docs) {
         // log("data:${doc.data()}");
         var categoriesModel = CategoriesModel.fromJson(doc.data());
         categories.add(categoriesModel.toEntity());
@@ -49,8 +52,6 @@ class MenuFirebaseServiseImpl extends MenuFirebaseServise{
       // }
       // log("message2:$categories");
       return right(categories);
-
-
     } on FirebaseException catch (e) {
       log("error:$e");
       return left(e.message);
@@ -60,20 +61,24 @@ class MenuFirebaseServiseImpl extends MenuFirebaseServise{
   @override
   Future<Either> getMenuItems() async {
     try {
-      final categories = [
-        "burger",
-        "dessert",
-        "pizza",
-        "frenchFries",
-        "pasta",
-        "specialSalads",
-        "coldDrinks",
-      ]..sort();
+      // final categories = [
+      //   "burger",
+      //   "dessert",
+      //   "pizza",
+      //   "frenchFries",
+      //   "pasta",
+      //   "specialSalads",
+      //   "coldDrinks",
+      // ]..sort();
 
-      final futures = categories.map((docId) async {
+      var res = await FirebaseFirestore.instance
+          .collection("Menu-catagories")
+          .get();
+
+      final futures = res.docs.map((doc) async {
         final data = await FirebaseFirestore.instance
             .collection("Menu-catagories")
-            .doc(docId)
+            .doc(doc.id)
             .collection("items")
             .get();
 
@@ -90,4 +95,29 @@ class MenuFirebaseServiseImpl extends MenuFirebaseServise{
     }
   }
 
+  // @override
+  // Future<void> putMenuItems() async {
+  //   try {
+  //     var data = await FirebaseFirestore.instance
+  //         .collection("Menu-catagories")
+  //         .doc("specialSalads")
+  //         .collection("items")
+  //         .add({
+  //           'item': "Roasted Chana Salad",
+  //           'description':
+  //               "protein-packed, healthy, and flavorful Indian salad recipe made with roasted chana, fresh veggies, spices, and herbs.",
+  //           'image':
+  //               "https://res.cloudinary.com/dyaxkwljm/image/upload/v1787225681/Roasted_Chana_Salad_iipk8h.webp",
+  //           'diet': "veg",
+  //           'variation': {
+  //             // "half": 49,
+  //             "full": 89,
+  //             },
+  //         });
+
+  //     log("data$data");
+  //   } on FirebaseException catch (e) {
+  //     log("error:$e");
+  //   }
+  // }
 }

@@ -96,7 +96,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
           TextButton(
             onPressed: () {
               Navigator.pop(context); // Close Dialog
-              Navigator.push(context,MaterialPageRoute(builder: (context) => HomePage(tableNum:tableNum),) ); // Return table number back to previous route
+              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => HomePage(tableNum:tableNum),) ); // Return table number back to previous route
             },
             child: const Text('Proceed to Menu'),
           ),

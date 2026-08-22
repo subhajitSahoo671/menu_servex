@@ -163,27 +163,4 @@ class ProfileDialogBox extends StatelessWidget {
   }
 }
 
-  // Row(
-  //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     children: [
-  //                       Padding(
-  //                         padding: const EdgeInsets.only(top: 2.0),
-  //                         child: FaIcon(FontAwesomeIcons.clock, color: AppColors.textSecondary,size: 17,),
-  //                       ),
-  //                       SizedBox(width: 10,),
-  //                       Column(
-  //                         children: [
-  //                           Text("Opening hours Daily"),
-  //                           Text("11AM - 11PM"),
-  //                         ],
-  //                       ),
-  //                     ],
-  //                   ),
-  //                   Spacer(),
-  //                   //signout button
-  //                   Align(
-  //                     alignment: .bottomCenter,
-  //                     child: FilledButton(onPressed: () {
-  //                       signedOut();
-  //                     }, child: Text("Sign Out")),
-  //                   )
+ 

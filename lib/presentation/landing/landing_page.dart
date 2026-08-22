@@ -131,7 +131,7 @@ class LandingPage extends StatelessWidget {
           height: 52,
           child: OutlinedButton(
             onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(),));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(tableNum: "No Table",),));
             },
            
             style: OutlinedButton.styleFrom(

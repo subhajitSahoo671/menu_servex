@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:menu_servex/core/configs/constants.dart';
 import 'package:menu_servex/core/configs/theme/app_colors.dart';
 import 'package:menu_servex/data/model/cart_items/cart_items.dart';
@@ -13,17 +14,20 @@ import 'package:menu_servex/presentation/cart/widgets/cart_item_card.dart';
 import 'package:menu_servex/presentation/landing/landing_page.dart';
 import 'package:menu_servex/presentation/orders/pages/all_orders.dart';
 import 'package:menu_servex/service_locator.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key, this.items});
 
   final ItemsEntity? items;
+
   // final String? tableNum;
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.widthOf(context);
     final String displayTableNum = TableNum.tableNum;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -53,7 +57,7 @@ class CartPage extends StatelessWidget {
         child: BlocBuilder<CartItemsCubit, List<CartItemsModel>>(
           builder: (BuildContext context, cartItems) {
             var totalPrice = context.read<CartItemsCubit>().totalPrice();
-            var tax = totalPrice * 0.05;
+            var tax = (totalPrice * 0.05).floorToDouble();
             return cartItems.isEmpty
                 ? Center(
                     child: Column(
@@ -122,12 +126,11 @@ class CartPage extends StatelessWidget {
                                   // left: 0,
                                   child: Align(
                                     alignment: .bottomCenter,
-                                    child: _checkoutButton(
-                                      context,
-                                      displayTableNum,
-                                      screenWidth,
-                                      (totalPrice + tax),
-                                      cartItems,
+                                    child: CheckoutButton(
+                                      screenWidth: screenWidth,
+                                      cartItems: cartItems,
+                                      tableNum: displayTableNum,
+                                      totalAmount: (totalPrice + tax),
                                     ),
                                   ),
                                 ),
@@ -336,12 +339,11 @@ class CartPage extends StatelessWidget {
 
               if (tabView) ...[
                 SizedBox(height: 70),
-                _checkoutButton(
-                  context,
-                  displayTableNum,
-                  screenWidth,
-                  (totalPrice + tax),
-                  cartItems,
+                CheckoutButton(
+                  screenWidth: screenWidth,
+                  cartItems: cartItems,
+                  tableNum: displayTableNum,
+                  totalAmount: (totalPrice + tax),
                 ),
               ],
             ],
@@ -352,14 +354,94 @@ class CartPage extends StatelessWidget {
       SizedBox(height: 120),
     ];
   }
+}
 
-  Widget _checkoutButton(
-    BuildContext context,
-    String tableNum,
-    double screenWidth,
-    double totalAmount,
-    List<CartItemsModel> cartItems,
-  ) {
+class CheckoutButton extends StatefulWidget {
+  const CheckoutButton({
+    super.key,
+    required this.tableNum,
+    required this.totalAmount,
+    required this.cartItems,
+    required this.screenWidth,
+  });
+
+  final String tableNum;
+  final double screenWidth;
+  final double totalAmount;
+  final List<CartItemsModel> cartItems;
+
+  @override
+  State<CheckoutButton> createState() => _CheckoutButtonState();
+}
+
+class _CheckoutButtonState extends State<CheckoutButton> {
+  String selectedPaymentMethod = "Prepaid";
+  Razorpay razorpay = Razorpay();
+
+  @override
+  void dispose() {
+    razorpay.clear(); // Removes all listeners
+    super.dispose();
+  }
+
+  Future<void> confirmOrder(BuildContext context) async {
+    final cartCubit = context.read<CartItemsCubit>();
+
+    var res = await sl<ConfirmOrdersDetailsUsecase>()
+        .call(
+          param: OrderDetailsModel(
+            userName: "dart",
+            orderTotal: widget.totalAmount.toString(),
+            tableNum: widget.tableNum,
+            orderPaymentMethod: selectedPaymentMethod,
+            orderItems: widget.cartItems,
+          ),
+        )
+        .timeout(const Duration(seconds: 20));
+
+      if (!mounted) return;
+
+    res.fold(
+      (l) {
+        context.showSnackBar(
+          message: l.toString(),
+          backgroundColor: Colors.red,
+        );
+      },
+      (r) {
+        context.showSnackBar(
+          message: r.toString(),
+          backgroundColor: Colors.green,
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => AllOrdersScreen()),
+        );
+
+        cartCubit.clearCartItems();
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, (
+      PaymentSuccessResponse response,
+    ) {
+      print("hhh ${response.data}");
+      confirmOrder(context);
+    });
+    razorpay.on(
+      Razorpay.EVENT_PAYMENT_ERROR,
+      (PaymentFailureResponse response) => context.showSnackBar(
+        message: response.message!.toString(),
+        backgroundColor: Colors.red,
+      ),
+    );
+
+    final double screenWidth = MediaQuery.widthOf(context);
+
     return Container(
       height: 80,
       constraints: BoxConstraints(maxWidth: 500),
@@ -385,61 +467,78 @@ class CartPage extends StatelessWidget {
           children: [
             //price
             Expanded(
+              flex: 2,
               child: Center(
-                child: Text(
-                  "₹$totalAmount",
-                  style: TextStyle(
+                // child: Text(
+                //   "₹$totalAmount",
+                //   style: TextStyle(
+                //     fontSize: (screenWidth * 0.032).clamp(15, 20),
+                //     fontWeight: .w600,
+                //     color: AppColors.primary,
+                //   ),
+                // ),
+                child: DropdownMenu<String>(
+                  initialSelection: selectedPaymentMethod,
+                  enableSearch: false,
+                  textAlign: .center,
+
+                  menuStyle: .new(
+                    backgroundColor: .all(AppColors.bg),
+                    elevation: .all(3),
+                    maximumSize: .all(.fromWidth(500)),
+                    alignment: .directional(-1, -5),
+                  ),
+                  textStyle: TextStyle(
                     fontSize: (screenWidth * 0.032).clamp(15, 20),
                     fontWeight: .w600,
                     color: AppColors.primary,
                   ),
+                  decorationBuilder: (context, controller) {
+                    return InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: .symmetric(horizontal: 24),
+                      // disabledBorder: .none
+                    );
+                  },
+                  onSelected: (String? value) {
+                    setState(() {
+                      selectedPaymentMethod = value!;
+                    });
+                  },
+                  dropdownMenuEntries: [
+                    _dropDownMenuEntry("COD", FontAwesomeIcons.moneyBillWave),
+                    _dropDownMenuEntry("Prepaid", FontAwesomeIcons.creditCard),
+                  ],
                 ),
               ),
             ),
             // AddToCartButton
             Expanded(
-              flex: 2,
+              flex: 3,
               child: FilledButton(
                 onPressed: () async {
-                  var res = await sl<ConfirmOrdersDetailsUsecase>().call(
-                    param: OrderDetailsModel(
-                      userName: "dart",
-                      orderTotal: totalAmount.toString(),
-                      tableNum: tableNum,
-                      orderPaymentMethod: "COD",
-                      orderItems: cartItems,
-                    ),
-                  ).timeout(const Duration(seconds: 20));
-
-                  res.fold(
-                    (l) {
-                      context.showSnackBar(
-                        message: l.toString(),
-                        backgroundColor: Colors.red,
-                      );
-                    },
-                    (r) {
-                      final cartCubit = context.read<CartItemsCubit>();
-
-                       context.showSnackBar(
-                        message: r.toString(),
-                        backgroundColor: Colors.green,
-                      );
-                
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => AllOrdersScreen()),
-                      );
-                      
-                      cartCubit.clearCartItems();
-                     
-                    },
-                  );
+                  if (selectedPaymentMethod == "COD") {
+                    confirmOrder(context);
+                  } else {
+                    var options = {
+                      'key': 'rzp_test_TSu36uUBt7CkyF',
+                      'amount': widget.totalAmount * 100,
+                      'name': 'serveX',
+                      // 'description': 'Fine T-Shirt',
+                      'prefill': {
+                        'contact': '8888888888',
+                        'email': 'dart@gmail.com',
+                      },
+                    };
+                    razorpay.open(options);
+                  }
                 },
 
                 child: Center(
                   child: Text(
-                    "Confirm Order",
+                    selectedPaymentMethod == "COD"
+                        ? "Confirm Order"
+                        : "Checkout",
                     style: TextStyle(
                       fontSize: (screenWidth * 0.032).clamp(14, 18),
                       fontWeight: .w500,
@@ -450,6 +549,22 @@ class CartPage extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  DropdownMenuEntry<String> _dropDownMenuEntry(String method, FaIconData icon) {
+    return DropdownMenuEntry(
+      value: method,
+      label: method,
+      leadingIcon: FaIcon(icon, size: 20),
+      labelWidget: Text(
+        method,
+        style: TextStyle(
+          fontSize: (widget.screenWidth * 0.032).clamp(15, 20),
+          fontWeight: .w600,
+          color: AppColors.textPrimary,
         ),
       ),
     );

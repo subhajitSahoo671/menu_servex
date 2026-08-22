@@ -26,7 +26,7 @@ class OrdersCard extends StatelessWidget {
                 // clipBehavior:  Clip.antiAlias,
                 constraints: BoxConstraints(maxWidth: 500),
                 elevation: 10,
-                insetPadding: EdgeInsets.only(bottom: 60,top: 20),
+                insetPadding: EdgeInsets.only(bottom: 60,top: 20,left: 16,right: 16),
               
                 child: OrdersCardDialog(orderDetails: orderDetails,),
                 // actions: [
@@ -84,27 +84,11 @@ class OrdersCard extends StatelessWidget {
                   ],
                 ),
         
-                orderDetails.orderStatus != "Pending" 
-               ? Center(child: Text("${orderDetails.orderStatus}",style: TextStyle(color:  orderDetails.orderStatus == "Pending"
-                        ? Colors.deepOrange
-                        : orderDetails.orderStatus == "Accepted"
-                        ? Colors.teal
-                        : orderDetails.orderStatus == "Preparing"
-                        ? Colors.orange
-                        : orderDetails.orderStatus == "Ready"
-                        ? Colors.green
-                        : orderDetails.orderStatus == "Delivered"
-                        ? Colors.grey
-                        : Colors.red,)))
-
-                 //view buton
-              : OutlinedButton(
-                
+                orderDetails.orderStatus == "Pending" 
+               ?  OutlinedButton(
                 onPressed: () {
                   _showOrderDetailsDialog(context);
                 },
-               
-                
                 style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
                   side: BorderSide(
@@ -115,7 +99,6 @@ class OrdersCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                
                  child:  Text(
                   "View",
                   style: TextStyle(
@@ -126,6 +109,49 @@ class OrdersCard extends StatelessWidget {
                   ),
                 ),
               ) 
+
+                 //view buton
+              : orderDetails.orderStatus == "Ready"
+              ? ElevatedButton(
+                onPressed: () {
+                  _showOrderDetailsDialog(context);
+                },
+                style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+              backgroundColor: Colors.green,
+              foregroundColor: AppColors.bg,
+              // shadowColor: Colors.green,
+              elevation: 2,
+                  side: BorderSide(
+                    color: AppColors.bg.withAlpha(100),
+                    width: 1,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                 child:  Text(
+                  "Mark",
+                  style: TextStyle(
+                    color: AppColors.bg,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    // letterSpacing: 0.5,
+                  ),
+                ),
+              ) 
+             : Center(child: Text("${orderDetails.orderStatus}",style: TextStyle(color:  orderDetails.orderStatus == "Pending"
+                        ? Colors.deepOrange
+                        : orderDetails.orderStatus == "Accepted"
+                        ? Colors.teal
+                        : orderDetails.orderStatus == "Preparing"
+                        ? Colors.orange
+                        : orderDetails.orderStatus == "Ready"
+                        ? Colors.green
+                        : orderDetails.orderStatus == "Delivered"
+                        ? Colors.grey
+                        : Colors.red,)))
+             
               ],
             ),
           ),
